@@ -7,7 +7,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
-val signingFile = File(System.getProperty("user.home"), ".android/noonlet-signing.properties")
+val signingFile = rootProject.file(".signing/signing.properties")
 val releaseKeys =
     Properties().apply {
         if (signingFile.exists()) signingFile.inputStream().use(::load)
@@ -28,7 +28,7 @@ android {
     signingConfigs {
         if (signingFile.exists()) {
             create("release") {
-                storeFile = file(releaseKeys.getProperty("storeFile"))
+                storeFile = signingFile.parentFile.resolve(releaseKeys.getProperty("storeFile"))
                 storePassword = releaseKeys.getProperty("storePassword")
                 keyAlias = releaseKeys.getProperty("keyAlias")
                 keyPassword = releaseKeys.getProperty("keyPassword")

@@ -21,6 +21,7 @@ Desktop.ini
 
 # Release artifacts and signing material
 /dist/
+.signing/
 *.apk
 *.aab
 *.apks

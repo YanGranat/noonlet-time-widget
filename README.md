@@ -34,16 +34,16 @@ Requirements: JDK 21, Android SDK 36, and `ANDROID_HOME` or a local `local.prope
 
 On Windows, use `.\gradlew.bat`. Release APKs are written to `app/build/outputs/apk/release/`.
 
-For signing, create `~/.android/noonlet-signing.properties` outside the repository:
+For signing, place your keystore and `signing.properties` in the ignored `.signing/` directory:
 
 ```properties
-storeFile=/absolute/path/to/release.jks
+storeFile=release.jks
 storePassword=your-store-password
 keyAlias=your-key-alias
 keyPassword=your-key-password
 ```
 
-Without this file, the release APK is unsigned. Keep signing keys private and retain the same key for future updates.
+`storeFile` is relative to `.signing/`. Without `signing.properties`, the release APK is unsigned. Keep signing keys private and retain the same key for future updates.
 
 ## Development
 
