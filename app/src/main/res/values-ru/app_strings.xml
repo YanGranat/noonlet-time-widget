@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_back">Назад</string>
+    <string name="app_settings">Настройки</string>
+    <string name="my_widgets">Мои виджеты</string>
+    <string name="app_theme">Тема приложения</string>
+    <string name="theme_system">Как в системе</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_dark">Тёмная</string>
+    <string name="temperature_units">Единицы температуры</string>
+    <string name="temperature_celsius">Цельсий (°C)</string>
+    <string name="temperature_fahrenheit">Фаренгейт (°F)</string>
+    <string name="data_privacy">Данные и конфиденциальность</string>
+    <string name="about_app">О приложении</string>
+    <string name="app_description">Виджеты часов и мирового времени для рабочего стола.</string>
+    <string name="app_version_format">Версия %1$s</string>
+    <string name="new_clock">Новые часы</string>
+    <string name="new_world_clock">Новый виджет мирового времени</string>
+    <string name="add_widget">Добавить виджет</string>
+    <string name="no_widgets">На рабочем столе нет виджетов</string>
+    <string name="clear_forecast_cache">Очистить кэш погоды</string>
+    <string name="forget_device_location">Удалить местоположение устройства</string>
+    <string name="app_permissions">Разрешения приложения</string>
+    <string name="clear_data_action">Очистить</string>
+    <string name="data_cleared">Данные удалены</string>
+    <string name="data_clear_failed">Не удалось удалить данные. Попробуйте ещё раз.</string>
+    <string name="clear_cache_confirmation">Кэш погоды будет удалён. Сохранённые места и настройки виджетов сохранятся. Данные погоды могут загрузиться заново при следующем обновлении.</string>
+    <string name="forget_device_confirmation">Сохранённое местоположение устройства и кэш погоды будут удалены. Выбранные вручную места и настройки виджетов сохранятся. При последующем обновлении, пока приложение открыто, оно сможет снова определить местоположение устройства.</string>
+    <string name="privacy_weather">Погода включается по желанию. Когда она включена, выбранные координаты отправляются в Open-Meteo. При поиске мест в Open-Meteo отправляется ваш запрос. При обращении к сервису ему также становится доступен ваш IP-адрес.</string>
+    <string name="privacy_storage">Настройки приложения и виджетов хранятся на устройстве. Автоматическое резервное копирование и перенос на другое устройство отключены. Сохранить копию в файл можно через экспорт настроек. Погода и последнее местоположение устройства сохраняются в локальном кэше. Местоположение запрашивается только при открытом приложении. В Noonlet нет аккаунтов, рекламы и аналитики.</string>
+    <string name="widget_clock_number">Часы %1$d</string>
+    <string name="widget_world_number">Мировое время %1$d</string>
+</resources>

@@ -1,0 +1,19 @@
+<resources>
+    <style name="Weight100" parent="WidgetWeightBase"><item name="android:textFontWeight">100</item></style>
+    <style name="Weight150" parent="WidgetWeightBase"><item name="android:textFontWeight">150</item></style>
+    <style name="Weight200" parent="WidgetWeightBase"><item name="android:textFontWeight">200</item></style>
+    <style name="Weight250" parent="WidgetWeightBase"><item name="android:textFontWeight">250</item></style>
+    <style name="Weight300" parent="WidgetWeightBase"><item name="android:textFontWeight">300</item></style>
+    <style name="Weight350" parent="WidgetWeightBase"><item name="android:textFontWeight">350</item></style>
+    <style name="Weight400" parent="WidgetWeightBase"><item name="android:textFontWeight">400</item></style>
+    <style name="Weight450" parent="WidgetWeightBase"><item name="android:textFontWeight">450</item></style>
+    <style name="Weight500" parent="WidgetWeightBase"><item name="android:textFontWeight">500</item></style>
+    <style name="Weight550" parent="WidgetWeightBase"><item name="android:textFontWeight">550</item></style>
+    <style name="Weight600" parent="WidgetWeightBase"><item name="android:textFontWeight">600</item></style>
+    <style name="Weight650" parent="WidgetWeightBase"><item name="android:textFontWeight">650</item></style>
+    <style name="Weight700" parent="WidgetWeightBase"><item name="android:textFontWeight">700</item></style>
+    <style name="Weight750" parent="WidgetWeightBase"><item name="android:textFontWeight">750</item></style>
+    <style name="Weight800" parent="WidgetWeightBase"><item name="android:textFontWeight">800</item></style>
+    <style name="Weight850" parent="WidgetWeightBase"><item name="android:textFontWeight">850</item></style>
+    <style name="Weight900" parent="WidgetWeightBase"><item name="android:textFontWeight">900</item></style>
+</resources>

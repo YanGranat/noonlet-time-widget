@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_back">Назад</string>
+    <string name="app_settings">Налаштування</string>
+    <string name="my_widgets">Мої віджети</string>
+    <string name="app_theme">Тема застосунку</string>
+    <string name="theme_system">Як у системі</string>
+    <string name="theme_light">Світла</string>
+    <string name="theme_dark">Темна</string>
+    <string name="temperature_units">Одиниці температури</string>
+    <string name="temperature_celsius">Цельсій (°C)</string>
+    <string name="temperature_fahrenheit">Фаренгейт (°F)</string>
+    <string name="data_privacy">Дані та конфіденційність</string>
+    <string name="about_app">Про застосунок</string>
+    <string name="app_description">Віджети годинника та світового часу для головного екрана.</string>
+    <string name="app_version_format">Версія %1$s</string>
+    <string name="new_clock">Новий годинник</string>
+    <string name="new_world_clock">Новий віджет світового часу</string>
+    <string name="add_widget">Додати віджет</string>
+    <string name="no_widgets">На головному екрані немає віджетів</string>
+    <string name="clear_forecast_cache">Очистити кеш погоди</string>
+    <string name="forget_device_location">Видалити місцезнаходження пристрою</string>
+    <string name="app_permissions">Дозволи застосунку</string>
+    <string name="clear_data_action">Очистити</string>
+    <string name="data_cleared">Дані видалено</string>
+    <string name="data_clear_failed">Не вдалося видалити дані. Спробуйте ще раз.</string>
+    <string name="clear_cache_confirmation">Кеш погоди буде видалено. Збережені місця й налаштування віджетів залишаться. Дані погоди можуть завантажитися знову під час наступного оновлення.</string>
+    <string name="forget_device_confirmation">Збережене місцезнаходження пристрою та кеш погоди буде видалено. Вибрані вручну місця й налаштування віджетів залишаться. Під час подальшого оновлення, поки застосунок відкрито, він зможе знову визначити місцезнаходження пристрою.</string>
+    <string name="privacy_weather">Погода вмикається за бажанням. Коли її ввімкнено, вибрані координати надсилаються до Open-Meteo. Під час пошуку місць ваш запит надсилається до Open-Meteo. Під час звернення до сервісу йому також стає доступна ваша IP-адреса.</string>
+    <string name="privacy_storage">Налаштування застосунку та віджетів зберігаються на пристрої. Автоматичне резервне копіювання й перенесення на інший пристрій вимкнено. Зберегти копію у файл можна через експорт налаштувань. Погода й останнє місцезнаходження пристрою зберігаються в локальному кеші. Місцезнаходження запитується лише у відкритому застосунку. У Noonlet немає облікових записів, реклами чи аналітики.</string>
+    <string name="widget_clock_number">Годинник %1$d</string>
+    <string name="widget_world_number">Світовий час %1$d</string>
+</resources>

@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_back">Back</string>
+    <string name="app_settings">Settings</string>
+    <string name="my_widgets">My widgets</string>
+    <string name="app_theme">App theme</string>
+    <string name="theme_system">System default</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="temperature_units">Temperature units</string>
+    <string name="temperature_celsius">Celsius (°C)</string>
+    <string name="temperature_fahrenheit">Fahrenheit (°F)</string>
+    <string name="data_privacy">Data and privacy</string>
+    <string name="about_app">About</string>
+    <string name="app_description">Clock and world clock widgets for your home screen.</string>
+    <string name="app_version_format">Version %1$s</string>
+    <string name="new_clock">New clock</string>
+    <string name="new_world_clock">New world clock</string>
+    <string name="add_widget">Add widget</string>
+    <string name="no_widgets">No widgets on your home screen</string>
+    <string name="clear_forecast_cache">Clear weather cache</string>
+    <string name="forget_device_location">Forget device location</string>
+    <string name="app_permissions">App permissions</string>
+    <string name="clear_data_action">Clear</string>
+    <string name="data_cleared">Data cleared</string>
+    <string name="data_clear_failed">Could not clear data. Try again.</string>
+    <string name="clear_cache_confirmation">Cached weather will be removed. Your saved locations and widget settings will be kept. Weather can be downloaded again during the next refresh.</string>
+    <string name="forget_device_confirmation">The saved device location and cached weather will be removed. Manually selected locations and widget settings will be kept. Device location can be obtained again during a later refresh while the app is open.</string>
+    <string name="privacy_weather">Weather is optional. When enabled, the selected coordinates are sent to Open-Meteo. Location search sends your query to Open-Meteo. Requests also expose your IP address to the service.</string>
+    <string name="privacy_storage">App and widget settings are stored on this device. Automatic backup and device transfer are disabled. Use Export settings to keep a file copy. Weather and the last device location are cached locally. Device location is requested only while the app is open. Noonlet has no accounts, ads, or analytics.</string>
+    <string name="widget_clock_number">Clock %1$d</string>
+    <string name="widget_world_number">World clock %1$d</string>
+</resources>

@@ -1,0 +1,27 @@
+<resources>
+    <item name="app_palette_cache" type="id" />
+    <attr name="appColorBackground" format="color" />
+    <attr name="appColorSurface" format="color" />
+    <attr name="appColorControlSurface" format="color" />
+    <attr name="appColorSelectedSurface" format="color" />
+    <attr name="appColorSectionHeader" format="color" />
+    <attr name="appColorInput" format="color" />
+    <attr name="appColorText" format="color" />
+    <attr name="appColorMuted" format="color" />
+    <attr name="appColorSecondaryText" format="color" />
+    <attr name="appColorAccent" format="color" />
+    <attr name="appColorOnAccent" format="color" />
+    <attr name="appColorBorder" format="color" />
+    <attr name="appColorSecondary" format="color" />
+    <attr name="appColorSelectionSurface" format="color" />
+    <attr name="appColorDivider" format="color" />
+    <attr name="appColorSwatchBorder" format="color" />
+    <attr name="appColorSwitchChecked" format="color" />
+    <attr name="appColorSwitchUnchecked" format="color" />
+    <attr name="appColorSwitchDisabledChecked" format="color" />
+    <attr name="appColorSwitchDisabledUnchecked" format="color" />
+    <attr name="appColorSwitchDisabledThumb" format="color" />
+    <attr name="appColorSwitchUncheckedThumb" format="color" />
+    <attr name="appColorRipple" format="color" />
+    <attr name="appColorHoverRipple" format="color" />
+</resources>

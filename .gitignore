@@ -1,0 +1,62 @@
+# Android and Gradle output
+.gradle/
+.kotlin/
+build/
+.externalNativeBuild/
+.cxx/
+captures/
+local.properties
+
+# Local IDE and operating-system files
+.idea/
+.vscode/
+.codex/
+.claude/
+.cursor/
+*.iml
+*.code-workspace
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Release artifacts and signing material
+/dist/
+*.apk
+*.aab
+*.apks
+*.idsig
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.pem
+*.key
+*-signing.properties
+keystore.properties
+key.properties
+
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+credentials.json
+service-account*.json
+
+# Temporary diagnostics and editor backups
+temporary_files/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.log
+*.hprof
+*.jfr
+*.trace
+*.bak
+*.old
+*.orig
+*.swp
+*~
+
+# Local agent files
+.agent/

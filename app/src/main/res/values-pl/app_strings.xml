@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_back">Wstecz</string>
+    <string name="app_settings">Ustawienia</string>
+    <string name="my_widgets">Moje widżety</string>
+    <string name="app_theme">Motyw aplikacji</string>
+    <string name="theme_system">Domyślny systemowy</string>
+    <string name="theme_light">Jasny</string>
+    <string name="theme_dark">Ciemny</string>
+    <string name="temperature_units">Jednostki temperatury</string>
+    <string name="temperature_celsius">Celsjusz (°C)</string>
+    <string name="temperature_fahrenheit">Fahrenheit (°F)</string>
+    <string name="data_privacy">Dane i prywatność</string>
+    <string name="about_app">O aplikacji</string>
+    <string name="app_description">Widżety zegara i czasu na świecie na ekran główny.</string>
+    <string name="app_version_format">Wersja %1$s</string>
+    <string name="new_clock">Nowy zegar</string>
+    <string name="new_world_clock">Nowy widżet czasu na świecie</string>
+    <string name="add_widget">Dodaj widżet</string>
+    <string name="no_widgets">Brak widżetów na ekranie głównym</string>
+    <string name="clear_forecast_cache">Wyczyść pamięć podręczną pogody</string>
+    <string name="forget_device_location">Usuń lokalizację urządzenia</string>
+    <string name="app_permissions">Uprawnienia aplikacji</string>
+    <string name="clear_data_action">Wyczyść</string>
+    <string name="data_cleared">Dane usunięte</string>
+    <string name="data_clear_failed">Nie udało się usunąć danych. Spróbuj ponownie.</string>
+    <string name="clear_cache_confirmation">Dane pogody z pamięci podręcznej zostaną usunięte. Zapisane miejsca i ustawienia widżetów zostaną zachowane. Dane pogody mogą zostać pobrane ponownie przy następnej aktualizacji.</string>
+    <string name="forget_device_confirmation">Zapisana lokalizacja urządzenia i dane pogody z pamięci podręcznej zostaną usunięte. Miejsca wybrane ręcznie i ustawienia widżetów zostaną zachowane. Lokalizacja urządzenia może zostać ustalona ponownie przy późniejszej aktualizacji, gdy aplikacja jest otwarta.</string>
+    <string name="privacy_weather">Pogoda jest opcjonalna. Gdy jest włączona, wybrane współrzędne są wysyłane do Open-Meteo. Wyszukiwanie miejsc wysyła zapytanie do Open-Meteo. Żądania ujawniają usłudze również Twój adres IP.</string>
+    <string name="privacy_storage">Ustawienia aplikacji i widżetów są przechowywane na tym urządzeniu. Automatyczne kopie zapasowe i przenoszenie między urządzeniami są wyłączone. Użyj opcji Eksportuj ustawienia, aby zapisać kopię w pliku. Pogoda i ostatnia lokalizacja urządzenia są zapisywane w lokalnej pamięci podręcznej. Lokalizacja jest pobierana tylko przy otwartej aplikacji. Noonlet nie ma kont, reklam ani analizy użytkowania.</string>
+    <string name="widget_clock_number">Zegar %1$d</string>
+    <string name="widget_world_number">Czas na świecie %1$d</string>
+</resources>

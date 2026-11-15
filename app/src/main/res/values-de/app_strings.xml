@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_back">Zurück</string>
+    <string name="app_settings">Einstellungen</string>
+    <string name="my_widgets">Meine Widgets</string>
+    <string name="app_theme">App-Design</string>
+    <string name="theme_system">Systemstandard</string>
+    <string name="theme_light">Hell</string>
+    <string name="theme_dark">Dunkel</string>
+    <string name="temperature_units">Temperatureinheiten</string>
+    <string name="temperature_celsius">Celsius (°C)</string>
+    <string name="temperature_fahrenheit">Fahrenheit (°F)</string>
+    <string name="data_privacy">Daten und Datenschutz</string>
+    <string name="about_app">Info</string>
+    <string name="app_description">Uhr- und Weltuhr-Widgets für den Startbildschirm.</string>
+    <string name="app_version_format">Version %1$s</string>
+    <string name="new_clock">Neue Uhr</string>
+    <string name="new_world_clock">Neues Weltuhr-Widget</string>
+    <string name="add_widget">Widget hinzufügen</string>
+    <string name="no_widgets">Keine Widgets auf dem Startbildschirm</string>
+    <string name="clear_forecast_cache">Wettercache leeren</string>
+    <string name="forget_device_location">Gerätestandort löschen</string>
+    <string name="app_permissions">App-Berechtigungen</string>
+    <string name="clear_data_action">Löschen</string>
+    <string name="data_cleared">Daten gelöscht</string>
+    <string name="data_clear_failed">Daten konnten nicht gelöscht werden. Versuche es erneut.</string>
+    <string name="clear_cache_confirmation">Die zwischengespeicherten Wetterdaten werden entfernt. Gespeicherte Orte und Widget-Einstellungen bleiben erhalten. Beim nächsten Aktualisieren können Wetterdaten erneut heruntergeladen werden.</string>
+    <string name="forget_device_confirmation">Der gespeicherte Gerätestandort und die zwischengespeicherten Wetterdaten werden entfernt. Manuell ausgewählte Orte und Widget-Einstellungen bleiben erhalten. Bei einer späteren Aktualisierung kann der Gerätestandort erneut ermittelt werden, während die App geöffnet ist.</string>
+    <string name="privacy_weather">Die Wetteranzeige ist optional. Ist sie aktiviert, werden die ausgewählten Koordinaten an Open-Meteo gesendet. Bei der Ortssuche wird die Suchanfrage an Open-Meteo gesendet. Der Dienst erhält bei Anfragen auch deine IP-Adresse.</string>
+    <string name="privacy_storage">App- und Widget-Einstellungen werden auf diesem Gerät gespeichert. Automatische Sicherungen und Geräteübertragungen sind deaktiviert. Über Einstellungen exportieren lässt sich eine Dateikopie speichern. Wetterdaten und der letzte Gerätestandort werden lokal zwischengespeichert. Der Standort wird nur bei geöffneter App abgefragt. Noonlet hat keine Konten, Werbung oder Nutzungsanalyse.</string>
+    <string name="widget_clock_number">Uhr %1$d</string>
+    <string name="widget_world_number">Weltuhr %1$d</string>
+</resources>

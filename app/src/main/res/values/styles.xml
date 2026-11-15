@@ -1,0 +1,95 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="WidgetPinTheme" parent="android:style/Theme.Material.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+    <style name="AppTheme" parent="android:style/Theme.Material.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
+        <item name="android:windowBackground">#101114</item>
+        <item name="android:colorBackground">?attr/appColorBackground</item>
+        <item name="android:colorPrimary">?attr/appColorSurface</item>
+        <item name="android:colorPrimaryDark">?attr/appColorBackground</item>
+        <item name="android:colorAccent">?attr/appColorAccent</item>
+        <item name="android:colorControlNormal">?attr/appColorMuted</item>
+        <item name="android:colorControlActivated">?attr/appColorAccent</item>
+        <item name="android:colorControlHighlight">?attr/appColorRipple</item>
+        <item name="android:textColorPrimary">?attr/appColorText</item>
+        <item name="android:textColorSecondary">?attr/appColorMuted</item>
+        <item name="android:navigationBarColor">?attr/appColorBackground</item>
+        <item name="android:statusBarColor">?attr/appColorBackground</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="appColorBackground">#09090B</item>
+        <item name="appColorSurface">#19191C</item>
+        <item name="appColorControlSurface">#171719</item>
+        <item name="appColorSelectedSurface">#353538</item>
+        <item name="appColorSectionHeader">#202023</item>
+        <item name="appColorInput">#111113</item>
+        <item name="appColorText">#F7F7F8</item>
+        <item name="appColorMuted">#9C9CA6</item>
+        <item name="appColorSecondaryText">#C9C9D0</item>
+        <item name="appColorAccent">#D9EF92</item>
+        <item name="appColorOnAccent">#09090B</item>
+        <item name="appColorBorder">#3B3B43</item>
+        <item name="appColorSecondary">#2A2A2F</item>
+        <item name="appColorSelectionSurface">#303725</item>
+        <item name="appColorDivider">#2A2A2E</item>
+        <item name="appColorSwatchBorder">#73737B</item>
+        <item name="appColorSwitchChecked">#758E3D</item>
+        <item name="appColorSwitchUnchecked">#4B4B54</item>
+        <item name="appColorSwitchDisabledChecked">#414C2E</item>
+        <item name="appColorSwitchDisabledUnchecked">#36363D</item>
+        <item name="appColorSwitchDisabledThumb">#92929C</item>
+        <item name="appColorSwitchUncheckedThumb">#FFFFFF</item>
+        <item name="appColorRipple">#28FFFFFF</item>
+        <item name="appColorHoverRipple">#20FFFFFF</item>
+    </style>
+    <style name="AppThemeLight" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+        <item name="android:windowBackground">?attr/appColorBackground</item>
+        <item name="android:colorBackground">?attr/appColorBackground</item>
+        <item name="android:colorPrimary">?attr/appColorSurface</item>
+        <item name="android:colorPrimaryDark">?attr/appColorBackground</item>
+        <item name="android:colorAccent">?attr/appColorAccent</item>
+        <item name="android:colorControlNormal">?attr/appColorMuted</item>
+        <item name="android:colorControlActivated">?attr/appColorAccent</item>
+        <item name="android:colorControlHighlight">?attr/appColorRipple</item>
+        <item name="android:textColorPrimary">?attr/appColorText</item>
+        <item name="android:textColorSecondary">?attr/appColorMuted</item>
+        <item name="android:navigationBarColor">?attr/appColorBackground</item>
+        <item name="android:statusBarColor">?attr/appColorBackground</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="appColorBackground">#F3F4F6</item>
+        <item name="appColorSurface">#FFFFFF</item>
+        <item name="appColorControlSurface">#E9EAED</item>
+        <item name="appColorSelectedSurface">#DDE0E5</item>
+        <item name="appColorSectionHeader">#F0F1F4</item>
+        <item name="appColorInput">#F5F6F8</item>
+        <item name="appColorText">#202126</item>
+        <item name="appColorMuted">#65666F</item>
+        <item name="appColorSecondaryText">#484A53</item>
+        <item name="appColorAccent">#25262C</item>
+        <item name="appColorOnAccent">#FFFFFF</item>
+        <item name="appColorBorder">#C9CCD2</item>
+        <item name="appColorSecondary">#E9EAEE</item>
+        <item name="appColorSelectionSurface">#E6E8ED</item>
+        <item name="appColorDivider">#DCDDE3</item>
+        <item name="appColorSwatchBorder">#7C7F89</item>
+        <item name="appColorSwitchChecked">#555963</item>
+        <item name="appColorSwitchUnchecked">#C6C9D0</item>
+        <item name="appColorSwitchDisabledChecked">#D2D5DC</item>
+        <item name="appColorSwitchDisabledUnchecked">#E1E3E8</item>
+        <item name="appColorSwitchDisabledThumb">#A0A4AE</item>
+        <item name="appColorSwitchUncheckedThumb">#5C606B</item>
+        <item name="appColorRipple">#1F000000</item>
+        <item name="appColorHoverRipple">#18000000</item>
+    </style>
+</resources>

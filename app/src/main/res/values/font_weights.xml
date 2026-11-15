@@ -1,0 +1,30 @@
+<resources>
+    <attr name="widgetFontFamily" format="string" />
+    <style name="WidgetWeightBase">
+        <item name="android:fontFamily">?attr/widgetFontFamily</item>
+        <item name="android:textColor">@null</item>
+        <item name="android:textColorLink">@null</item>
+        <item name="android:textSize">0sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+    <style name="Weight100" parent="WidgetWeightBase" />
+    <style name="Weight150" parent="WidgetWeightBase" />
+    <style name="Weight200" parent="WidgetWeightBase" />
+    <style name="Weight250" parent="WidgetWeightBase" />
+    <style name="Weight300" parent="WidgetWeightBase" />
+    <style name="Weight350" parent="WidgetWeightBase" />
+    <style name="Weight400" parent="WidgetWeightBase" />
+    <style name="Weight450" parent="WidgetWeightBase" />
+    <style name="Weight500" parent="WidgetWeightBase" />
+    <style name="Weight550" parent="WidgetWeightBase" />
+    <style name="Weight600" parent="WidgetWeightBase" />
+    <style name="Weight650" parent="WidgetWeightBase" />
+    <style name="Weight700" parent="WidgetWeightBase" />
+    <style name="Weight750" parent="WidgetWeightBase" />
+    <style name="Weight800" parent="WidgetWeightBase" />
+    <style name="Weight850" parent="WidgetWeightBase" />
+    <style name="Weight900" parent="WidgetWeightBase" />
+    <style name="WidgetFontSans"><item name="widgetFontFamily">sans-serif</item></style>
+    <style name="WidgetFontMonospace"><item name="widgetFontFamily">monospace</item></style>
+    <style name="WidgetFontSerif"><item name="widgetFontFamily">serif</item></style>
+</resources>

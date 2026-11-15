@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_back">Atrás</string>
+    <string name="app_settings">Ajustes</string>
+    <string name="my_widgets">Mis widgets</string>
+    <string name="app_theme">Tema de la aplicación</string>
+    <string name="theme_system">Predeterminado del sistema</string>
+    <string name="theme_light">Claro</string>
+    <string name="theme_dark">Oscuro</string>
+    <string name="temperature_units">Unidades de temperatura</string>
+    <string name="temperature_celsius">Celsius (°C)</string>
+    <string name="temperature_fahrenheit">Fahrenheit (°F)</string>
+    <string name="data_privacy">Datos y privacidad</string>
+    <string name="about_app">Acerca de</string>
+    <string name="app_description">Widgets de reloj y hora mundial para la pantalla de inicio.</string>
+    <string name="app_version_format">Versión %1$s</string>
+    <string name="new_clock">Nuevo reloj</string>
+    <string name="new_world_clock">Nuevo widget de hora mundial</string>
+    <string name="add_widget">Añadir widget</string>
+    <string name="no_widgets">No hay widgets en la pantalla de inicio</string>
+    <string name="clear_forecast_cache">Borrar caché del tiempo</string>
+    <string name="forget_device_location">Borrar ubicación del dispositivo</string>
+    <string name="app_permissions">Permisos de la aplicación</string>
+    <string name="clear_data_action">Borrar</string>
+    <string name="data_cleared">Datos borrados</string>
+    <string name="data_clear_failed">No se pudieron borrar los datos. Inténtalo de nuevo.</string>
+    <string name="clear_cache_confirmation">Se borrarán los datos del tiempo guardados en caché. Se conservarán tus ubicaciones guardadas y los ajustes de los widgets. Los datos del tiempo podrán descargarse de nuevo en la siguiente actualización.</string>
+    <string name="forget_device_confirmation">Se borrarán la ubicación guardada del dispositivo y los datos del tiempo en caché. Se conservarán las ubicaciones seleccionadas manualmente y los ajustes de los widgets. La ubicación del dispositivo podrá obtenerse de nuevo en una actualización posterior mientras la aplicación esté abierta.</string>
+    <string name="privacy_weather">El tiempo es opcional. Cuando está activado, las coordenadas seleccionadas se envían a Open-Meteo. La búsqueda de ubicaciones envía tu consulta a Open-Meteo. Las solicitudes también revelan tu dirección IP al servicio.</string>
+    <string name="privacy_storage">Los ajustes de la aplicación y de los widgets se guardan en este dispositivo. La copia de seguridad automática y la transferencia entre dispositivos están desactivadas. Usa Exportar ajustes para guardar una copia en un archivo. El tiempo y la última ubicación del dispositivo se guardan en caché localmente. La ubicación solo se solicita con la aplicación abierta. Noonlet no tiene cuentas, anuncios ni análisis de uso.</string>
+    <string name="widget_clock_number">Reloj %1$d</string>
+    <string name="widget_world_number">Hora mundial %1$d</string>
+</resources>

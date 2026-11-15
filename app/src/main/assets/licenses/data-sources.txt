@@ -1,0 +1,10 @@
+Weather data: Open-Meteo
+https://open-meteo.com/
+
+Location data: GeoNames
+https://www.geonames.org/
+
+Creative Commons Attribution 4.0 International
+https://creativecommons.org/licenses/by/4.0/
+
+Temperatures are rounded. Location search results are filtered and formatted for display.

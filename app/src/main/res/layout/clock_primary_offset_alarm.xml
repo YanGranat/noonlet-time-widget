@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/clock_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <FrameLayout
+        android:id="@+id/clock_primary_rows"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+        <LinearLayout
+            android:id="@+id/clock_time_position"
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:gravity="center_vertical" android:orientation="vertical"
+            android:clipChildren="false" android:clipToPadding="false">
+            <include layout="@layout/clock_time_row" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/clock_date_position"
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:gravity="center_vertical" android:orientation="vertical"
+            android:clipChildren="false" android:clipToPadding="false">
+            <include layout="@layout/clock_date_row" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/clock_alarm_position"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:gravity="start"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/clock_alarm_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</FrameLayout>

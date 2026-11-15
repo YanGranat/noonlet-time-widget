@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_back">Retour</string>
+    <string name="app_settings">Paramètres</string>
+    <string name="my_widgets">Mes widgets</string>
+    <string name="app_theme">Thème de l’application</string>
+    <string name="theme_system">Par défaut du système</string>
+    <string name="theme_light">Clair</string>
+    <string name="theme_dark">Sombre</string>
+    <string name="temperature_units">Unités de température</string>
+    <string name="temperature_celsius">Celsius (°C)</string>
+    <string name="temperature_fahrenheit">Fahrenheit (°F)</string>
+    <string name="data_privacy">Données et confidentialité</string>
+    <string name="about_app">À propos</string>
+    <string name="app_description">Widgets d’horloge et d’horloge mondiale pour l’écran d’accueil.</string>
+    <string name="app_version_format">Version %1$s</string>
+    <string name="new_clock">Nouvelle horloge</string>
+    <string name="new_world_clock">Nouveau widget d’horloge mondiale</string>
+    <string name="add_widget">Ajouter un widget</string>
+    <string name="no_widgets">Aucun widget sur l’écran d’accueil</string>
+    <string name="clear_forecast_cache">Vider le cache météo</string>
+    <string name="forget_device_location">Effacer la position de l’appareil</string>
+    <string name="app_permissions">Autorisations de l’application</string>
+    <string name="clear_data_action">Effacer</string>
+    <string name="data_cleared">Données effacées</string>
+    <string name="data_clear_failed">Impossible d’effacer les données. Réessayez.</string>
+    <string name="clear_cache_confirmation">Les données météo en cache seront supprimées. Vos lieux enregistrés et les paramètres des widgets seront conservés. Les données météo pourront être téléchargées à nouveau lors de la prochaine actualisation.</string>
+    <string name="forget_device_confirmation">La position enregistrée de l’appareil et les données météo en cache seront supprimées. Les lieux sélectionnés manuellement et les paramètres des widgets seront conservés. La position de l’appareil pourra être obtenue à nouveau lors d’une actualisation ultérieure pendant que l’application est ouverte.</string>
+    <string name="privacy_weather">La météo est facultative. Lorsqu’elle est activée, les coordonnées sélectionnées sont envoyées à Open-Meteo. La recherche de lieux envoie votre requête à Open-Meteo. Les requêtes communiquent également votre adresse IP au service.</string>
+    <string name="privacy_storage">Les paramètres de l’application et des widgets sont stockés sur cet appareil. La sauvegarde automatique et le transfert entre appareils sont désactivés. Exporter les paramètres permet de conserver une copie dans un fichier. La météo et la dernière position de l’appareil sont mises en cache localement. La position est demandée uniquement lorsque l’application est ouverte. Noonlet ne comporte ni comptes, ni publicités, ni analyse d’utilisation.</string>
+    <string name="widget_clock_number">Horloge %1$d</string>
+    <string name="widget_world_number">Horloge mondiale %1$d</string>
+</resources>
