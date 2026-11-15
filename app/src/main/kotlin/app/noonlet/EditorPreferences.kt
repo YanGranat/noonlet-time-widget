@@ -29,6 +29,11 @@ class EditorPreferences(context: Context) {
     fun selectPreviewSize(world: Boolean, choice: Int) =
         stored.edit().putInt(previewSizeKey(world), choice).apply()
 
+    internal fun importRevision(): Long = stored.getLong("settings_import_revision", 0)
+
+    internal fun recordImport() =
+        stored.edit().putLong("settings_import_revision", importRevision() + 1).apply()
+
     fun recordPinCompletion(id: Int, world: Boolean, owner: String) =
         stored.edit().putString(completionKey(id, world), owner).apply()
 

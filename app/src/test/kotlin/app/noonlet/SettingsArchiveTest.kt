@@ -4,6 +4,8 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProviderInfo
 import android.content.ComponentName
 import android.content.Context
+import java.lang.reflect.Modifier
+import java.util.Objects
 import org.json.JSONObject
 import org.junit.Assert.*
 import org.junit.Before
@@ -60,6 +62,50 @@ class SettingsArchiveTest {
         }
         assertEquals(setOf("format", "version", "application", "clock", "world"), JSONObject(text).keys().asSequence().toSet())
         assertEquals(original.language, SettingsArchive.read(("\uFEFF"+text).byteInputStream()).language)
+    }
+
+    @Test fun everyPublicSettingSurvivesTransferWithANondefaultValue() {
+        val fields = WidgetSettings::class.java.fields.filter { !Modifier.isStatic(it.modifiers) }
+        val settings = WidgetSettings().apply {
+            for (field in fields) {
+                val value = field.get(this)
+                val alternative: Any = when (value) {
+                    is Boolean -> !value
+                    is Int -> when {
+                        field.name.endsWith("Color") -> 0xffa1b2c3.toInt()
+                        field.name.endsWith("Weight") -> 500
+                        else -> 17
+                    }.let { if (it == value) it + 1 else it }
+                    is String -> when (field.name) {
+                        "zoneId" -> listOf("Asia/Tokyo", "Europe/Paris")
+                        "timeFormat" -> listOf("h:mm a", "HH:mm")
+                        "dateFormat" -> listOf("yyyy-MM-dd", "EEE, d MMM")
+                        "alarmFormat" -> listOf("HH:mm:ss.SSS", "HH:mm")
+                        "weatherPlace" -> listOf(WeatherPlace("North Point", 54_200_000, -2_100_000).encode(), "")
+                        "fontFamily", "weatherFontFamily" -> listOf("serif", "monospace")
+                        else -> listOf("settings", "clock")
+                    }.first { it != value }
+                    is Array<*> -> arrayOf("Europe/Paris", "Asia/Tokyo").let {
+                        if (Objects.deepEquals(value, it)) it.reversedArray() else it
+                    }
+                    is Enum<*> -> field.type.enumConstants.first { it != value }
+                    else -> error("Unsupported setting: ${field.name}")
+                }
+                assertFalse(field.name, Objects.deepEquals(value, alternative))
+                field.set(this, alternative)
+            }
+        }
+        val configuration = SettingsArchive.Configuration(WidgetSize.FOUR_BY_TWO, settings)
+        val group = SettingsArchive.Group(configuration, listOf(configuration))
+        val original = contents().copy(clock = group, world = group)
+        SettingsArchive.restore(context, SettingsArchive.read(SettingsArchive.encode(original).byteInputStream()))
+        val restored = SettingsArchive.capture(context)
+        for (item in listOf(restored.clock.draft, restored.world.draft,
+            restored.clock.widgets.single(), restored.world.widgets.single())) {
+            assertEquals(configuration.size, item.size)
+            for (field in fields)
+                assertTrue(field.name, Objects.deepEquals(field.get(settings), field.get(item.settings)))
+        }
     }
 
     @Test fun restoringMapsLocalBindingsAndPreservesConfigurationsWithoutAHost() {

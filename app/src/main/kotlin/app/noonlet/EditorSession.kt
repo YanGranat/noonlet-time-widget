@@ -31,8 +31,14 @@ class EditorSession(context: Context, intent: Intent, state: Bundle?) {
     private var homeSavedStates = Bundle()
     private var editorSavedState: Bundle? = null
     private var bindingSnapshot: Array<IntArray>? = null
-    internal val importedConfiguration = if (creatingNew)
-        ImportedWidgetConfigurations.get(context, intent.getStringExtra(EditorIntents.RESTORED_CONFIGURATION)) else null
+    private var importRevision = preferences.importRevision()
+    private val importedToken = intent.getStringExtra(EditorIntents.RESTORED_CONFIGURATION)
+    internal val importedConfiguration: ImportedWidgetConfigurations.Item?
+        get() = when {
+            creatingNew -> ImportedWidgetConfigurations.get(context, importedToken)
+            widgetId == 0 && homeTargetId == 0 -> ImportedWidgetConfigurations.all(context).firstOrNull { it.world == world }
+            else -> null
+        }
 
     internal fun <T> withBindings(action: () -> T): T {
         if (bindingSnapshot != null) return action()
@@ -67,6 +73,7 @@ class EditorSession(context: Context, intent: Intent, state: Bundle?) {
         get() = Target(if (widgetId > 0) widgetId else homeTargetId, world)
 
     init {
+        val restoreDrafts = state == null || state.getLong(IMPORT_REVISION, 0) == importRevision
         bindingSnapshot = arrayOf(readBoundIds(false), readBoundIds(true))
         WidgetSettingsStore.pruneConfigurations(context, boundIds(false), boundIds(true))
         world =
@@ -104,8 +111,10 @@ class EditorSession(context: Context, intent: Intent, state: Bundle?) {
                 if (creatingNew) 0
                 else if (state?.containsKey("home_target_id") == true) state.getInt("home_target_id")
                 else selectedTarget(world)
-            state?.getBundle("home_drafts")?.let { homeDrafts = Bundle(it) }
-            state?.getBundle("home_saved_states")?.let { homeSavedStates = Bundle(it) }
+            if (restoreDrafts) {
+                state?.getBundle("home_drafts")?.let { homeDrafts = Bundle(it) }
+                state?.getBundle("home_saved_states")?.let { homeSavedStates = Bundle(it) }
+            }
         }
         val previousSaved =
             if (widgetId == 0) homeSavedStates.getBundle(draftKey(homeTargetId, world)) else null
@@ -118,13 +127,14 @@ class EditorSession(context: Context, intent: Intent, state: Bundle?) {
                     WidgetSettingsStore.loadUnplaced(context, world)
                 else WidgetSettingsStore.load(context, widgetId, world)
             } else loadHomeDraft(homeTargetId, world)
-        if (importedConfiguration?.world == world && state == null) {
-            settings = importedConfiguration.configuration.settings
-            preferences.selectPreviewSize(world, importedConfiguration.configuration.size.ordinal)
+        val imported = importedConfiguration
+        if (creatingNew && imported?.world == world && state == null) {
+            settings = imported.configuration.settings
+            preferences.selectPreviewSize(world, imported.configuration.size.ordinal)
         }
         if (widgetId > 0) editorSavedState = SettingsCodec.snapshot(settings)
         if (
-            state != null &&
+            state != null && restoreDrafts &&
                 (if (widgetId > 0)
                     initialConfiguration ||
                         state.getBundle("editor_saved_state") == null ||
@@ -149,6 +159,7 @@ class EditorSession(context: Context, intent: Intent, state: Bundle?) {
         out.putBoolean(INITIAL_CONFIGURATION, initialConfiguration)
         out.putBoolean(CREATING_NEW, creatingNew)
         out.putString(PIN_OWNER, pinOwner)
+        out.putLong(IMPORT_REVISION, importRevision)
         editorSavedState?.let { out.putBundle("editor_saved_state", Bundle(it)) }
         if (widgetId == 0) {
             stashHomeDraft()
@@ -210,6 +221,7 @@ class EditorSession(context: Context, intent: Intent, state: Bundle?) {
     }
 
     fun reconcile(onApplied: (ApplyResult) -> Unit): Transition {
+        if (reloadImportedSettings()) return Transition.RELOADED_SETTINGS
         if (widgetId > 0 || creatingNew) return Transition.UNCHANGED
         syncExternalSelection(false)
         syncExternalSelection(true)
@@ -272,8 +284,27 @@ class EditorSession(context: Context, intent: Intent, state: Bundle?) {
     }
 
     private fun applyWithBindings(forceHostUpdate: Boolean): ApplyResult {
+        if (reloadImportedSettings()) return ApplyResult.ConflictReloaded
         if (initialConfiguration) return ApplyResult.Deferred
         val current = target
+        val imported = importedConfiguration?.takeIf { it.world == world && current.id == 0 }
+        if (imported != null) {
+            val key = draftKey(0, world)
+            val saved = SettingsCodec.snapshot(imported.configuration.settings)
+            val previous = homeSavedStates.getBundle(key)
+            if (previous != null && !SettingsCodec.sameEditorSettings(previous, saved)) {
+                settings = imported.configuration.settings
+                homeSavedStates.putBundle(key, saved)
+                homeDrafts.remove(key)
+                return ApplyResult.ConflictReloaded
+            }
+            val snapshot = SettingsCodec.snapshot(settings)
+            if (!SettingsCodec.sameEditorSettings(saved, snapshot))
+                ImportedWidgetConfigurations.updateSettings(context, imported.token, settings)
+            homeSavedStates.putBundle(key, snapshot)
+            stashHomeDraft()
+            return ApplyResult.DraftSaved
+        }
         if (widgetId == 0 && !targetExists() && (creatingNew || placedIds(world).isEmpty())) {
             val savedDraft = WidgetSettingsStore.loadUnplaced(context, world)
             if (
@@ -357,9 +388,7 @@ class EditorSession(context: Context, intent: Intent, state: Bundle?) {
     }
 
     private fun loadHomeDraft(id: Int, kind: Boolean): WidgetSettings {
-        val draft =
-            if (id == 0) WidgetSettingsStore.loadUnplaced(context, kind)
-            else WidgetSettingsStore.load(context, id, kind)
+        val draft = persistedHomeDraft(id, kind)
         val key = draftKey(id, kind)
         val saved = SettingsCodec.snapshot(draft)
         val previous = homeSavedStates.getBundle(key)
@@ -373,9 +402,7 @@ class EditorSession(context: Context, intent: Intent, state: Bundle?) {
     private fun reloadExternalSettings(): Boolean {
         if (homeTargetId > 0 && homeTargetId !in placedIds(world)) return false
         val key = draftKey(homeTargetId, world)
-        val saved =
-            if (homeTargetId == 0) WidgetSettingsStore.loadUnplaced(context, world)
-            else WidgetSettingsStore.load(context, homeTargetId, world)
+        val saved = persistedHomeDraft(homeTargetId, world)
         val snapshot = SettingsCodec.snapshot(saved)
         val previous = homeSavedStates.getBundle(key)
         if (previous == null) {
@@ -389,9 +416,28 @@ class EditorSession(context: Context, intent: Intent, state: Bundle?) {
         return true
     }
 
+    private fun persistedHomeDraft(id: Int, kind: Boolean): WidgetSettings =
+        if (id > 0) WidgetSettingsStore.load(context, id, kind)
+        else importedConfiguration?.takeIf { it.world == kind }?.configuration?.settings
+            ?: WidgetSettingsStore.loadUnplaced(context, kind)
+
+    internal fun reloadImportedSettings(): Boolean {
+        val revision = preferences.importRevision()
+        if (revision == importRevision) return false
+        importRevision = revision
+        homeDrafts = Bundle()
+        homeSavedStates = Bundle()
+        if (widgetId > 0) {
+            settings = WidgetSettingsStore.load(context, widgetId, world)
+            editorSavedState = SettingsCodec.snapshot(settings)
+        } else settings = loadHomeDraft(homeTargetId, world)
+        return true
+    }
+
     companion object {
         private const val INITIAL_CONFIGURATION = "initial_widget_configuration"
         private const val CREATING_NEW = "creating_new_widget"
         private const val PIN_OWNER = "pin_owner"
+        private const val IMPORT_REVISION = "editor_import_revision"
     }
 }

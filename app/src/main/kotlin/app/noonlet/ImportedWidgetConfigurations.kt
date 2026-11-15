@@ -24,16 +24,34 @@ internal object ImportedWidgetConfigurations {
 
     fun get(context: Context, token: String?): Item? = token?.let { key -> all(context).firstOrNull { it.token == key } }
 
+    @Synchronized
     fun replace(context: Context, values: List<Pair<Boolean, SettingsArchive.Configuration>>) =
         write(context, values.map { Item(UUID.randomUUID().toString(), it.first, it.second) })
 
+    @Synchronized
     fun remove(context: Context, token: String?) {
         if (token != null) write(context, all(context).filter { it.token != token })
     }
 
+    @Synchronized
+    fun updateSettings(context: Context, token: String, settings: WidgetSettings): Boolean {
+        val values = all(context).toMutableList()
+        val index = values.indexOfFirst { it.token == token }
+        if (index < 0) return false
+        val item = values[index]
+        val normalized = WidgetSettings.defaults(item.world).apply {
+            SettingsCodec.readFrom(this, SettingsCodec.snapshot(settings))
+        }
+        values[index] = item.copy(configuration = item.configuration.copy(settings = normalized))
+        stored(context).edit().putString("items", encode(values)).apply()
+        return true
+    }
+
+    private fun encode(values: List<Item>): String =
+        JSONArray(values.map { item -> JSONObject().put("token", item.token).put("world", item.world)
+            .put("configuration", SettingsArchive.configurationJson(item.configuration)) }).toString()
+
     private fun write(context: Context, values: List<Item>) {
-        val items = JSONArray(values.map { item -> JSONObject().put("token", item.token).put("world", item.world)
-            .put("configuration", SettingsArchive.configurationJson(item.configuration)) })
-        check(stored(context).edit().putString("items", items.toString()).commit())
+        check(stored(context).edit().putString("items", encode(values)).commit())
     }
 }

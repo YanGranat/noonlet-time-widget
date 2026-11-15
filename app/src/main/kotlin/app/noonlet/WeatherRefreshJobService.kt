@@ -123,6 +123,17 @@ object WeatherRefreshScheduler {
         }
     }
 
+    internal fun refreshAfterImport(context: Context): CompletableFuture<Void> {
+        val app = context.applicationContext
+        val placed = configurations(app)
+        val pending = if (placed.isEmpty())
+            ImportedWidgetConfigurations.all(app).firstOrNull { !it.world }?.configuration?.settings else null
+        val editor = pending ?: WidgetSettingsStore.loadUnplaced(app, false)
+        val requests = (placed.map { it.second } + WeatherRequest.capture(editor)).filter { it.enabled }.distinct()
+        val updates = requests.map { WeatherRepository.refresh(app, it) }
+        return CompletableFuture.allOf(*updates.toTypedArray()).thenCompose { updateWidgets(app) }
+    }
+
     fun clearForecastCache(context: Context): CompletableFuture<Void> {
         val app = context.applicationContext
         return WeatherRepository.clearForecastCache(app).thenCompose { updateWidgets(app) }

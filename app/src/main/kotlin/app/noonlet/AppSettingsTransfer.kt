@@ -120,6 +120,7 @@ internal class AppSettingsTransfer(private val activity: Activity, private val i
                         BaseWidgetProvider.updateAll(context, true)
                         WeatherRefreshScheduler.reconcile(context)
                         AlarmRefreshScheduler.reconcile(context)
+                        WeatherRefreshScheduler.refreshAfterImport(context).exceptionally { null }
                     }
                     handler.post {
                         task = null

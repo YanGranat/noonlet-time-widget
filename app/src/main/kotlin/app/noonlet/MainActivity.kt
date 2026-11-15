@@ -51,6 +51,7 @@ internal class MainActivity : Activity(), EditorDialogOwner, EditorHost {
     private var renderedTemperatureUnit: TemperatureUnit? = null
     private var settingsErasureRevision: Long? = null
     private var settingsHadLocationPermission = false
+    private var renderedImportRevision = 0L
     private var returnToClock = false
     private val BG get() = palette.background
     private val CARD get() = palette.surface
@@ -125,12 +126,14 @@ internal class MainActivity : Activity(), EditorDialogOwner, EditorHost {
         WidgetSettingsStore.delete(this, EditorPreview.PREVIEW_CLOCK, false)
         WidgetSettingsStore.delete(this, EditorPreview.PREVIEW_WORLD, true)
         session = EditorSession(this, intent, state)
+        renderedImportRevision = state?.getLong("rendered_import_revision", 0)
+            ?: session.preferences.importRevision()
         if (session.widgetId > 0) setResult(RESULT_CANCELED)
         preview.restoreSavedSizes()
         if (state != null) {
             restoredScroll = state.getInt("editor_scroll", 0)
             sections.restore(state)
-            preview.restoreState(state)
+            if (renderedImportRevision == session.preferences.importRevision()) preview.restoreState(state)
         }
         render()
         placePicker.prepare()
@@ -148,6 +151,7 @@ internal class MainActivity : Activity(), EditorDialogOwner, EditorHost {
         sections.save(out)
         settingsErasureRevision?.let { out.putLong("settings_erasure_revision", it) }
         out.putBoolean("settings_location_permission", settingsHadLocationPermission)
+        out.putLong("rendered_import_revision", renderedImportRevision)
         out.putBoolean("return_to_clock", returnToClock)
     }
 
@@ -172,6 +176,13 @@ internal class MainActivity : Activity(), EditorDialogOwner, EditorHost {
 
     private fun resumeEditor() {
         if (finishCompletedPin()) return
+        val importRevision = session.preferences.importRevision()
+        val imported = renderedImportRevision != importRevision
+        if (imported) {
+            session.reloadImportedSettings()
+            preview.restoreSavedSizes()
+            renderedImportRevision = importRevision
+        }
         val tabChanged = returnToClock && session.switchTab(false, ::handleApplyResult)
         returnToClock = false
         if (tabChanged) {
@@ -189,7 +200,7 @@ internal class MainActivity : Activity(), EditorDialogOwner, EditorHost {
         val skipWeatherRefresh = settingsErasureRevision?.let {
             val erased = it != WeatherRefreshScheduler.erasureRevision(this)
             val permissionGranted = !settingsHadLocationPermission && WeatherLocation.hasForegroundPermission(this)
-            erased || !permissionGranted
+            erased || (!permissionGranted && !imported)
         } ?: false
         settingsErasureRevision = null
         preview.activate()
@@ -217,7 +228,7 @@ internal class MainActivity : Activity(), EditorDialogOwner, EditorHost {
         val phoneChanged = !phoneLocale.toLanguageTag().equals(preview.phoneLocaleTag)
         val resourcesChanged = reconcileEditorLocale(appLocaleTag, phoneChanged)
         synchronizeHomeEditor()
-        if (uiLanguageChanged(phoneLocale) || themeChanged || tabChanged) {
+        if (uiLanguageChanged(phoneLocale) || themeChanged || tabChanged || imported) {
             dismissEditorDialogs()
             render()
         }

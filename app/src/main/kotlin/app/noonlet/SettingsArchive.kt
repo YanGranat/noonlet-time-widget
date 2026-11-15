@@ -158,6 +158,7 @@ internal object SettingsArchive {
                 setThemeMode(contents.theme)
                 setTemperatureUnit(contents.unit)
             }
+            editor.recordImport()
             AppLocales.setLanguage(context, contents.language)
             check(stores.values.all { it.edit().commit() })
         } catch (error: Exception) {
