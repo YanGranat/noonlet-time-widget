@@ -38,11 +38,11 @@ object PinRequestFixtures {
         assertTrue(activity.isFinishing)
         assertFalse(shadow.isTaskMovedToBack)
         val resumed = checkNotNull(shadow.nextStartedActivity)
-        assertEquals(home, resumed.component)
-        assertNull(resumed.action)
-        assertNull(resumed.categories)
+        assertNull(resumed.component)
+        assertEquals(Intent.ACTION_MAIN, resumed.action)
+        assertEquals(setOf(Intent.CATEGORY_HOME), resumed.categories)
         assertTrue(resumed.flags and Intent.FLAG_ACTIVITY_NEW_TASK != 0)
-        assertTrue(resumed.flags and Intent.FLAG_ACTIVITY_REORDER_TO_FRONT != 0)
+        assertEquals(0, resumed.flags and Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
         assertNull(shadow.nextStartedActivity)
     }
 

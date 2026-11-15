@@ -204,6 +204,23 @@ class EditorCompletionTest {
     }
 
     @Test
+    @Config(sdk = [26, 28, 34, 36])
+    fun anExternalOriginReturnsThroughTheSystemHomeIntent() {
+        editor().use { controller ->
+            val activity = controller.get()
+            activity.intent.putExtra(Intent.EXTRA_REFERRER,
+                android.net.Uri.parse("android-app://example.reader"))
+            val pending = request(activity)
+            controller.pause()
+            bind(37291, false)
+            complete(pending, 37291)
+            controller.resume()
+            activity.onWindowFocusChanged(true)
+            assertCompletedAtHome(activity)
+        }
+    }
+
+    @Test
     fun eachSelectedSizePinsItsStaticProviderProfile() {
         for (world in listOf(false, true)) {
             editor(world).use { controller ->

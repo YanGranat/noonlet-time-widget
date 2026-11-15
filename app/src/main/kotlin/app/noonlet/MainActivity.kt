@@ -722,13 +722,7 @@ internal class MainActivity : Activity(), EditorDialogOwner, EditorHost {
             val component = home.resolveActivity(packageManager)
             if (component != null && referrer?.scheme == "android-app" &&
                 referrer?.authority == component.packageName) moveTaskToBack(true)
-            else startActivity(
-                if (component == null || component.packageName == "android")
-                    home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                else
-                    Intent().setComponent(component)
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_REORDER_TO_FRONT),
-            )
+            else startActivity(home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }
         finish()
     }
