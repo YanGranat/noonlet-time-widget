@@ -2,12 +2,16 @@ package app.noonlet
 
 import android.content.Context
 import android.os.Looper
+import android.os.SystemClock
 import android.provider.Settings
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import kotlin.math.roundToInt
+import java.time.Clock
+import java.time.Instant
+import java.time.ZoneOffset
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -26,8 +30,10 @@ import org.robolectric.annotation.GraphicsMode
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class PreviewHostParityTest {
     private val context: Context get() = RuntimeEnvironment.getApplication()
+    private val timestamp = Instant.parse("2031-02-18T09:23:00Z").toEpochMilli()
 
     @Before fun prepare() {
+        check(SystemClock.setCurrentTimeMillis(timestamp))
         for (name in listOf("noonlet_widgets", "MainActivity", "widget_drafts", "noonlet_app"))
             context.getSharedPreferences(name, 0).edit().clear().commit()
         AppLocales.setLanguage(context, "en")
@@ -79,6 +85,8 @@ class PreviewHostParityTest {
         val request = EditorIntents.edit(context, 5190, false)
         Robolectric.buildActivity(MainActivity::class.java, request).setup().visible().use { controller ->
             val activity = controller.get()
+            activity.preview.clock = Clock.fixed(Instant.ofEpochMilli(timestamp), ZoneOffset.UTC)
+            activity.preview.refresh(false)
             val root = activity.findViewById<ViewGroup>(android.R.id.content).getChildAt(0)
             layout(root, 400, 850)
             val stage = root.findViewWithTag<WidgetPreviewStage>("preview-stage")
@@ -100,7 +108,9 @@ class PreviewHostParityTest {
     }
 
     private fun verify(width: Int) {
-        Robolectric.buildActivity(MainActivity::class.java).setup().visible().use { controller ->
+        val editor = Robolectric.buildActivity(MainActivity::class.java)
+        editor.get().preview.clock = Clock.fixed(Instant.ofEpochMilli(timestamp), ZoneOffset.UTC)
+        editor.setup().visible().use { controller ->
             val activity = controller.get()
             val density = activity.resources.displayMetrics.density
             val widthPx = (width * density).roundToInt()
@@ -136,6 +146,8 @@ class PreviewHostParityTest {
                         assertNotNull("Host element $id / ${size.label}", actual)
                         assertEquals(actual.visibility, shown.visibility)
                         if (actual.visibility != View.VISIBLE) continue
+                        assertEquals("Displayed text for $id at width $width / ${size.label}",
+                            actual.text.toString(), shown.text.toString())
                         assertEquals("Displayed text size for $id at width $width / ${size.label}",
                             actual.textSize, shown.textSize * board.scaleX, .1f)
                         assertEquals("Horizontal position for $id at width $width / ${size.label}",

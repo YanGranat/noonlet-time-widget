@@ -65,6 +65,7 @@ kotlin {
 }
 
 tasks.withType<Test>().configureEach {
+    testLogging.exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
     maxHeapSize = "1536m"
     val crashDirectory = layout.buildDirectory.dir("test-worker").get().asFile
     val temporaryDirectory = File(crashDirectory, "tmp")
