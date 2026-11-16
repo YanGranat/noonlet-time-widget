@@ -17,6 +17,12 @@ Each widget has its own settings. Clocks tick inside the launcher using Android 
 
 Install the APK, open your home screen's **Widgets** menu, and choose **Noonlet**. Settings apply automatically after placement. **Save changes** also saves and refreshes the selected widget, then returns to the home screen. Adding a widget from the app returns home after the launcher confirms placement. By default, clock taps open the system alarm screen and world-clock taps open widget settings.
 
+<p align="center">
+  <a href="docs/demo.mp4">
+    <img src="docs/demo.gif" alt="Set up clock and world clock widgets" width="400">
+  </a>
+</p>
+
 The editor offers 2 × 1, 4 × 1, 2 × 2 and 4 × 2 layouts. The selected layout sets the initial size requested when adding from the app. The home screen controls final placement and resizing.
 
 Export or import app and widget settings from **Settings**. Imported widgets that are not placed yet appear in **My widgets**.
