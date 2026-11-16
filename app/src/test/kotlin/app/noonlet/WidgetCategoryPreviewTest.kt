@@ -160,12 +160,12 @@ class WidgetCategoryPreviewTest {
             val preview = WidgetThumbnailView(activity).apply { bindCategory(false) }
             activity.setContentView(preview)
             measure(preview, 256)
-            assertEquals(64, preview.height)
+            assertEquals(76, preview.height)
             val bitmap = capture(preview)
             assertEquals(328, bitmap.width)
             assertEquals(82, bitmap.height)
             measure(preview, 368)
-            assertEquals(82, preview.height)
+            assertEquals(98, preview.height)
             assertSame(bitmap, (preview.getChildAt(0) as ImageView).let {
                 (it.drawable as BitmapDrawable).bitmap
             })
@@ -198,7 +198,7 @@ class WidgetCategoryPreviewTest {
             val bitmap = capture(preview)
             assertEquals(150, bitmap.width)
             assertEquals(90, bitmap.height)
-            assertEquals(90, preview.height)
+            assertEquals(106, preview.height)
         }
     }
 

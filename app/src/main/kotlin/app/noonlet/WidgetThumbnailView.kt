@@ -22,6 +22,7 @@ internal class WidgetThumbnailView(context: Context) : FrameLayout(context) {
     private var nativeContent: View? = null
     private var logicalSize = SizeF(150f, 90f)
     private val density get() = resources.displayMetrics.density
+    private val inset get() = (8 * density).roundToInt()
     private val capture = Runnable { captureContent() }
 
     init {
@@ -120,8 +121,10 @@ internal class WidgetThumbnailView(context: Context) : FrameLayout(context) {
         val available = MeasureSpec.getSize(widthMeasureSpec).coerceAtLeast(1)
         val nativeWidth = (logicalSize.width * density).roundToInt().coerceAtLeast(1)
         val nativeHeight = (logicalSize.height * density).roundToInt().coerceAtLeast(1)
-        val scale = minOf(1f, available.toFloat() / nativeWidth, 172 * density / nativeHeight)
-        val height = (nativeHeight * scale).roundToInt().coerceAtLeast(1)
+        val contentWidth = (available - inset * 2).coerceAtLeast(1)
+        val contentHeight = (172 * density - inset * 2).coerceAtLeast(1f)
+        val scale = minOf(1f, contentWidth.toFloat() / nativeWidth, contentHeight / nativeHeight)
+        val height = (nativeHeight * scale).roundToInt().coerceAtLeast(1) + inset * 2
         setMeasuredDimension(available, height)
         nativeContent?.measure(MeasureSpec.makeMeasureSpec(nativeWidth, MeasureSpec.EXACTLY),
             MeasureSpec.makeMeasureSpec(nativeHeight, MeasureSpec.EXACTLY))
@@ -139,12 +142,16 @@ internal class WidgetThumbnailView(context: Context) : FrameLayout(context) {
             return
         }
         content.layout(0, 0, content.measuredWidth, content.measuredHeight)
-        val scale = minOf(1f, width.toFloat() / content.width, height.toFloat() / content.height)
+        val availableWidth = (width - inset * 2).coerceAtLeast(1)
+        val availableHeight = (height - inset * 2).coerceAtLeast(1)
+        val scale = minOf(1f, availableWidth.toFloat() / content.width,
+            availableHeight.toFloat() / content.height)
         content.pivotX = 0f
         content.pivotY = 0f
         content.scaleX = scale
         content.scaleY = scale
-        content.translationX = (width - content.width * scale) / 2f
+        content.translationX = inset + (availableWidth - content.width * scale) / 2f
+        content.translationY = inset.toFloat()
         removeCallbacks(capture)
         post(capture)
     }
@@ -169,6 +176,7 @@ internal class WidgetThumbnailView(context: Context) : FrameLayout(context) {
         nativeContent = null
         addView(ImageView(context).apply {
             scaleType = ImageView.ScaleType.FIT_CENTER
+            setPadding(inset, inset, inset, inset)
             setImageBitmap(bitmap)
         }, ViewGroup.LayoutParams(-1, -1))
     }
