@@ -23,7 +23,7 @@
     <string name="clear_data_action">Clear</string>
     <string name="data_cleared">Data cleared</string>
     <string name="data_clear_failed">Could not clear data. Try again.</string>
-    <string name="clear_cache_confirmation">Cached weather will be removed. Your saved locations and widget settings will be kept. Weather can be downloaded again during the next refresh.</string>
+    <string name="clear_cache_confirmation">Cached weather data will be removed. Your saved locations and widget settings will be kept. Weather data can be downloaded again during the next refresh.</string>
     <string name="forget_device_confirmation">The saved device location and cached weather will be removed. Manually selected locations and widget settings will be kept. Device location can be obtained again during a later refresh while the app is open.</string>
     <string name="privacy_weather">Weather is optional. When enabled, the selected coordinates are sent to Open-Meteo. Location search sends your query to Open-Meteo. Requests also expose your IP address to the service.</string>
     <string name="privacy_storage">App and widget settings are stored on this device. Automatic backup and device transfer are disabled. Use Export settings to keep a file copy. Weather and the last device location are cached locally. Device location is requested only while the app is open. Noonlet has no accounts, ads, or analytics.</string>

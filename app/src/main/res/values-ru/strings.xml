@@ -4,7 +4,7 @@
     <string name="world_widget_name">Мировое время</string>
     <string name="clock_widget_description">Компактные часы с датой на прозрачном фоне.</string>
     <string name="world_widget_description">Время в городах на светлых и тёмных плашках.</string>
-    <string name="alarm_unavailable">Не удалось открыть системный будильник на этом телефоне.</string>
+    <string name="alarm_unavailable">Не удалось открыть системный будильник.</string>
     <string name="edit_widget">Настройка виджета</string>
     <string name="preview">Предпросмотр</string>
     <string name="add_to_home_screen">Добавить на рабочий стол</string>
@@ -60,9 +60,9 @@
     <string name="alarm_size">Размер будильника</string>
     <string name="alarm_alignment">Выравнивание будильника</string>
     <string name="cities_and_countries">Города и страны</string>
-    <string name="city_already_added">Этот город уже добавлен</string>
+    <string name="city_already_added">Это место уже добавлено</string>
     <string name="add_place">Добавить место</string>
-    <string name="more_cities_hint">Для трёх или четырёх городов увеличьте виджет на рабочем столе до 2 × 2 клеток или больше.</string>
+    <string name="more_cities_hint">Для трёх или четырёх мест увеличьте виджет на рабочем столе до 2 × 2 клеток или больше.</string>
     <string name="font_weight">Толщина шрифта</string>
     <string name="day">День</string>
     <string name="night">Ночь</string>
@@ -90,8 +90,8 @@
     <string name="center">По центру</string>
     <string name="right">Справа</string>
     <string name="custom_format">Свой формат…</string>
-    <string name="phone_date_language_hint">Названия дней недели и месяцев используют язык телефона.</string>
-    <string name="date_pattern_help">HH — часы, mm — минуты, EEE — день недели, d — число, MMM — месяц, yyyy — год. Обычный текст заключайте в одинарные кавычки.</string>
+    <string name="phone_date_language_hint">Дни недели и месяцы отображаются на языке телефона.</string>
+    <string name="date_pattern_help">HH — часы, mm — минуты, EEE — день недели, d — число месяца, MMM — месяц, yyyy — год. Обычный текст заключайте в одинарные кавычки.</string>
     <string name="cancel">Отмена</string>
     <string name="save">Сохранить</string>
     <string name="enter_a_format">Введите формат</string>
@@ -114,8 +114,8 @@
     <string name="choose_a_place">Выбрать место</string>
     <string name="loading_places">Загрузка мест…</string>
     <string name="the_place_list_could_not_be_loaded">Не удалось загрузить список мест</string>
-    <string name="expanded">Развернуто</string>
-    <string name="collapsed">Свернуто</string>
+    <string name="expanded">Развёрнуто</string>
+    <string name="collapsed">Свёрнуто</string>
     <string name="date_hidden_summary">Скрыта · формат, размер и положение</string>
     <string name="alarm_hidden_summary">Скрыт · значок, формат и оформление</string>
     <string name="separate_time_date_and_alarm_actions">Отдельно для времени, даты и будильника</string>
@@ -148,7 +148,7 @@
     <string name="preview_move_right">На клетку вправо</string>
     <string name="preview_move_up">На клетку вверх</string>
     <string name="preview_move_down">На клетку вниз</string>
-    <string name="preview_fills_area">Предпросмотр: размер занимает всю область</string>
+    <string name="preview_fills_area">Виджет занимает всю область предпросмотра</string>
     <string name="preview_position">Перетащите для примерки. Столбец %1$d, строка %2$d</string>
     <string name="application_language">Язык приложения</string>
     <string name="system_language">Как в телефоне</string>
@@ -207,8 +207,8 @@
     <string name="weather_device_location_detail">Местоположение обновляется при открытии %1$s. Пока приложение закрыто, данные о погоде обновляются для последнего определённого места.</string>
     <string name="weather_update_failed">Не удалось обновить данные о погоде</string>
     <string name="weather_text_format">Формат текста погоды</string>
-    <string name="weather_condition_temperature">Состояние и температура</string>
-    <string name="weather_temperature_condition">Температура и состояние</string>
+    <string name="weather_condition_temperature">Погодные условия и температура</string>
+    <string name="weather_temperature_condition">Температура и погодные условия</string>
     <string name="weather_temperature_only">Только температура</string>
     <string name="weather_text_color">Цвет текста погоды</string>
     <string name="weather_text_size">Размер текста погоды</string>

@@ -4,7 +4,7 @@
     <string name="world_widget_name">Reloj mundial</string>
     <string name="clock_widget_description">Reloj compacto con fecha y fondo transparente.</string>
     <string name="world_widget_description">Horas de ciudades en tarjetas redondeadas de día y de noche.</string>
-    <string name="alarm_unavailable">El despertador del sistema no está disponible en este teléfono.</string>
+    <string name="alarm_unavailable">No se pudo abrir el despertador del sistema.</string>
     <string name="edit_widget">Editar widget</string>
     <string name="preview">Vista previa</string>
     <string name="add_to_home_screen">Añadir a la pantalla de inicio</string>
@@ -25,8 +25,8 @@
     <string name="horizontal">Horizontal</string>
     <string name="vertical">Vertical</string>
     <string name="time_date_spacing">Espacio entre hora y fecha</string>
-    <string name="reset_to_defaults">Restablecer apariencia</string>
-    <string name="reset_to_defaults_message">Se restablecerá la apariencia. Los lugares, las funciones activadas y las acciones al tocar se conservarán.</string>
+    <string name="reset_to_defaults">Restablecer aspecto</string>
+    <string name="reset_to_defaults_message">Se restablecerá el aspecto. Los lugares, las funciones activadas y las acciones al tocar se conservarán.</string>
     <string name="reset">Restablecer</string>
     <string name="padding">Márgenes interiores</string>
     <string name="top_padding">Margen superior</string>
@@ -60,9 +60,9 @@
     <string name="alarm_size">Tamaño de la alarma</string>
     <string name="alarm_alignment">Alineación de la alarma</string>
     <string name="cities_and_countries">Ciudades y países</string>
-    <string name="city_already_added">Esta ciudad ya está añadida</string>
+    <string name="city_already_added">Este lugar ya está añadido</string>
     <string name="add_place">Añadir lugar</string>
-    <string name="more_cities_hint">Para tres o cuatro ciudades, amplía el widget de la pantalla de inicio a 2 × 2 celdas o más.</string>
+    <string name="more_cities_hint">Para tres o cuatro lugares, amplía el widget de la pantalla de inicio a 2 × 2 celdas o más.</string>
     <string name="font_weight">Grosor de la fuente</string>
     <string name="day">Día</string>
     <string name="night">Noche</string>
@@ -91,7 +91,7 @@
     <string name="right">Derecha</string>
     <string name="custom_format">Formato personalizado…</string>
     <string name="phone_date_language_hint">Los nombres de días y meses usan el idioma del teléfono.</string>
-    <string name="date_pattern_help">HH: horas, mm: minutos, EEE: día de la semana, d: día, MMM: mes, yyyy: año. Escribe el texto entre comillas simples.</string>
+    <string name="date_pattern_help">HH: horas, mm: minutos, EEE: día de la semana, d: día del mes, MMM: mes, yyyy: año. Escribe el texto entre comillas simples.</string>
     <string name="cancel">Cancelar</string>
     <string name="save">Guardar</string>
     <string name="enter_a_format">Introduce un formato</string>
@@ -148,7 +148,7 @@
     <string name="preview_move_right">Una celda a la derecha</string>
     <string name="preview_move_up">Una celda hacia arriba</string>
     <string name="preview_move_down">Una celda hacia abajo</string>
-    <string name="preview_fills_area">Vista previa: este tamaño ocupa toda el área</string>
+    <string name="preview_fills_area">El widget ocupa toda el área de vista previa</string>
     <string name="preview_position">Arrastra para probar una posición. Columna %1$d, fila %2$d</string>
     <string name="application_language">Idioma de la aplicación</string>
     <string name="system_language">Idioma del sistema</string>
@@ -189,7 +189,7 @@
     <string name="weather_fog">Niebla</string>
     <string name="weather_drizzle">Llovizna</string>
     <string name="weather_rain">Lluvia</string>
-    <string name="weather_freezing_rain">Lluvia helada</string>
+    <string name="weather_freezing_rain">Lluvia engelante</string>
     <string name="weather_snow">Nieve</string>
     <string name="weather_snow_grains">Nieve granulada</string>
     <string name="weather_rain_showers">Chubascos</string>
@@ -197,7 +197,7 @@
     <string name="weather_thunderstorm">Tormenta</string>
     <string name="weather_thunderstorm_hail">Tormenta con granizo</string>
     <string name="weather_settings_unavailable">Los ajustes de Android no están disponibles</string>
-    <string name="weather_freezing_drizzle">Llovizna helada</string>
+    <string name="weather_freezing_drizzle">Llovizna engelante</string>
     <string name="weather_loading_short">Cargando</string>
     <string name="weather_no_data">Sin datos</string>
     <string name="weather_automatic">Automática</string>
@@ -207,8 +207,8 @@
     <string name="weather_device_location_detail">La ubicación se actualiza al abrir %1$s. Con la aplicación cerrada, el tiempo usa la última ubicación detectada.</string>
     <string name="weather_update_failed">No se pudieron actualizar los datos meteorológicos</string>
     <string name="weather_text_format">Formato del texto del tiempo</string>
-    <string name="weather_condition_temperature">Estado y temperatura</string>
-    <string name="weather_temperature_condition">Temperatura y estado</string>
+    <string name="weather_condition_temperature">Condiciones y temperatura</string>
+    <string name="weather_temperature_condition">Temperatura y condiciones</string>
     <string name="weather_temperature_only">Solo temperatura</string>
     <string name="weather_text_color">Color del texto del tiempo</string>
     <string name="weather_text_size">Tamaño del texto del tiempo</string>

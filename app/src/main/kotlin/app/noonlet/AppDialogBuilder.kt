@@ -194,11 +194,12 @@ internal class AppDialogBuilder(context: Context) :
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         decor.clipToOutline = true
         var styled = false
-        val previous = intArrayOf(-1, -1)
+        val previous = intArrayOf(-1, -1, -1)
         val update = Runnable {
             if (!styled && dialog.getButton(DialogInterface.BUTTON_POSITIVE) != null) {
                 styled = true
                 finishAppearance(dialog)
+                previous.fill(-1)
             }
             constrain(dialog, previous)
         }
@@ -365,10 +366,31 @@ internal class AppDialogBuilder(context: Context) :
         val screenHeight =
             visible.height().takeIf { it > 0 } ?: context.resources.displayMetrics.heightPixels
         val width = minOf(dp(context, 400), maxOf(dp(context, 240), screenWidth - dp(context, 40)))
-        if (previous[0] == width && previous[1] == screenHeight) return
+        val listWidth = dialog.listView?.width ?: 0
+        if (previous[0] == width && previous[1] == screenHeight && previous[2] == listWidth) return
         previous[0] = width
         previous[1] = screenHeight
+        previous[2] = listWidth
         window.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
+        if (customBody == null) dialog.listView?.let { list ->
+            val header = window.decorView.findViewWithTag<View>("dialog-header")
+            header?.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+            val footer = intArrayOf(DialogInterface.BUTTON_POSITIVE, DialogInterface.BUTTON_NEGATIVE,
+                DialogInterface.BUTTON_NEUTRAL).any { dialog.getButton(it)?.visibility == View.VISIBLE }
+            val available = maxOf(dp(context, 56), screenHeight - (header?.measuredHeight ?: 0) -
+                dp(context, if (footer) 112 else 32))
+            var content = list.paddingTop + list.paddingBottom
+            for (position in 0 until list.adapter.count) {
+                val row = list.adapter.getView(position, null, list)
+                row.layoutDirection = context.resources.configuration.layoutDirection
+                row.measure(View.MeasureSpec.makeMeasureSpec(width - list.paddingLeft - list.paddingRight,
+                    View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+                content += row.measuredHeight + if (position == 0) 0 else list.dividerHeight
+                if (content >= available) break
+            }
+            setHeight(list, minOf(content, available))
+        }
         val body = customBody ?: return
         val buttons =
             intArrayOf(

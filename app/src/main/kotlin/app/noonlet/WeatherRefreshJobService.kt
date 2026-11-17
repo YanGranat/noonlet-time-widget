@@ -15,6 +15,7 @@ import java.util.concurrent.Executors
 object WeatherRefreshScheduler {
     internal const val PERIODIC_JOB = 4101
     internal const val IMMEDIATE_JOB = 4102
+    internal const val DEFERRED_JOB = 4104
     private const val REFRESH_FLEX = 5 * 60_000L
     private var signature = ""
     private val publisher = Executors.newSingleThreadExecutor { task ->
@@ -41,6 +42,7 @@ object WeatherRefreshScheduler {
         if (settings.isEmpty()) {
             scheduler.cancel(PERIODIC_JOB)
             scheduler.cancel(IMMEDIATE_JOB)
+            scheduler.cancel(DEFERRED_JOB)
             signature = ""
             return
         }
@@ -66,8 +68,11 @@ object WeatherRefreshScheduler {
         }
         if (missing || current != signature) {
             signature = current
-            if (settings.any { WeatherRepository.state(context, it.second).status != WeatherStatus.FRESH })
-                scheduler.schedule(builder(context, IMMEDIATE_JOB).build())
+            if (settings.any { WeatherRepository.state(context, it.second).status != WeatherStatus.FRESH }) {
+                val delay = WeatherRepository.retryDelay(context)
+                if (delay > 0) defer(context, delay)
+                else scheduler.schedule(builder(context, IMMEDIATE_JOB).build())
+            }
         }
     }
 
@@ -84,9 +89,8 @@ object WeatherRefreshScheduler {
                 try {
                     while (true) {
                         synchronized(publicationLock) { publishAgain = false }
-                        configurations(app).forEach { (id, _) ->
-                            BaseWidgetProvider.updateWidget(app, id, false)
-                        }
+                        val complete = BaseWidgetProvider.updateBatch(app,
+                            configurations(app).map { it.first }.toIntArray(), false)
                         val repeat =
                             synchronized(publicationLock) {
                                 if (publishAgain) true
@@ -95,7 +99,10 @@ object WeatherRefreshScheduler {
                                     false
                                 }
                             }
-                        if (!repeat) break
+                        if (!repeat) {
+                            check(complete) { "Widget publication failed" }
+                            break
+                        }
                     }
                     result.complete(null)
                 } catch (error: Exception) {
@@ -141,6 +148,12 @@ object WeatherRefreshScheduler {
 
     fun erasureRevision(context: Context): Long = WeatherRepository.erasureRevision(context)
 
+    internal fun defer(context: Context, delay: Long) {
+        if (delay <= 0 || configurations(context).isEmpty()) return
+        context.getSystemService(JobScheduler::class.java)?.schedule(
+            builder(context, DEFERRED_JOB).setMinimumLatency(delay).setPersisted(true).build())
+    }
+
     fun clearDeviceLocation(context: Context): CompletableFuture<Void> {
         val app = context.applicationContext
         return WeatherRepository.clearDeviceLocation(app).thenCompose { updateWidgets(app) }
@@ -182,7 +195,7 @@ class WeatherRefreshJobService : JobService() {
                     WeatherRepository.refresh(
                         this,
                         it,
-                        forceRefresh = params.jobId == WeatherRefreshScheduler.PERIODIC_JOB,
+                        forceRefresh = params.jobId != WeatherRefreshScheduler.IMMEDIATE_JOB,
                     )
                 },
             )
@@ -191,11 +204,13 @@ class WeatherRefreshJobService : JobService() {
             main.post {
                 if (active[params.jobId] !== run) return@post
                 val retry = run.requests.any { WeatherRepository.shouldRetry(this, it) }
+                val delay = WeatherRepository.retryDelay(this)
                 WeatherRefreshScheduler.updateWidgets(this).whenComplete { _, error ->
                     main.post {
                         if (active[params.jobId] === run) {
                             active.remove(params.jobId)
-                            jobFinished(params, retry || error != null)
+                            jobFinished(params, retry && delay == 0L || error != null)
+                            if (retry && delay > 0) WeatherRefreshScheduler.defer(this, delay)
                         }
                     }
                 }

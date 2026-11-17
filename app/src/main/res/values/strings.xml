@@ -4,7 +4,7 @@
     <string name="world_widget_name">World clock</string>
     <string name="clock_widget_description">A compact clock and date with a transparent background.</string>
     <string name="world_widget_description">Day and night city clocks in rounded cards.</string>
-    <string name="alarm_unavailable">The system alarm clock is unavailable on this phone.</string>
+    <string name="alarm_unavailable">Could not open the system alarm clock.</string>
     <string name="edit_widget">Edit widget</string>
     <string name="preview">Preview</string>
     <string name="add_to_home_screen">Add to home screen</string>
@@ -21,7 +21,7 @@
     <string name="tap_date">Tap date</string>
     <string name="tap_alarm">Tap alarm</string>
     <string name="appearance">Appearance</string>
-    <string name="widget_orientation">Widget orientation</string>
+    <string name="widget_orientation">Element layout</string>
     <string name="horizontal">Horizontal</string>
     <string name="vertical">Vertical</string>
     <string name="time_date_spacing">Time–date spacing</string>
@@ -60,9 +60,9 @@
     <string name="alarm_size">Alarm size</string>
     <string name="alarm_alignment">Alarm alignment</string>
     <string name="cities_and_countries">Cities and countries</string>
-    <string name="city_already_added">This city is already added</string>
+    <string name="city_already_added">This place has already been added</string>
     <string name="add_place">Add place</string>
-    <string name="more_cities_hint">For three or four cities, enlarge the home-screen widget to 2 × 2 cells or more.</string>
+    <string name="more_cities_hint">For three or four places, enlarge the home-screen widget to 2 × 2 cells or more.</string>
     <string name="font_weight">Font weight</string>
     <string name="day">Day</string>
     <string name="night">Night</string>
@@ -91,7 +91,7 @@
     <string name="right">Right</string>
     <string name="custom_format">Custom format…</string>
     <string name="phone_date_language_hint">Weekday and month names use the phone language.</string>
-    <string name="date_pattern_help">HH — hours, mm — minutes, EEE — weekday, d — day, MMM — month, yyyy — year. Put words inside single quotes.</string>
+    <string name="date_pattern_help">HH — hours, mm — minutes, EEE — weekday, d — day of the month, MMM — month, yyyy — year. Put words inside single quotes.</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
     <string name="enter_a_format">Enter a format</string>
@@ -148,7 +148,7 @@
     <string name="preview_move_right">One cell right</string>
     <string name="preview_move_up">One cell up</string>
     <string name="preview_move_down">One cell down</string>
-    <string name="preview_fills_area">Preview: this size fills the preview</string>
+    <string name="preview_fills_area">The widget fills the preview area</string>
     <string name="preview_position">Drag to try a position. Column %1$d, row %2$d</string>
     <string name="application_language">Application language</string>
     <string name="system_language">System language</string>

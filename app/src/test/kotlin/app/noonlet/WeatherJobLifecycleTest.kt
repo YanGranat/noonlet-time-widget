@@ -134,6 +134,22 @@ class WeatherJobLifecycleTest {
         controller.destroy()
     }
 
+    @Test fun serverDirectedBackoffSchedulesOneDelayedJobInsteadOfRapidRetries() {
+        WeatherRepository.store = store(Executor { it.run() }, weatherClient { throw WeatherRetry(time + 120_000) })
+        val controller = Robolectric.buildService(WeatherRefreshJobService::class.java).create()
+        val service = controller.get()
+        assertTrue(service.onStartJob(parameters()))
+        assertFalse(awaitFinished(service).isRescheduleNeeded)
+        val scheduler = context.getSystemService(android.app.job.JobScheduler::class.java)
+        val deferred = requireNotNull(scheduler.getPendingJob(WeatherRefreshScheduler.DEFERRED_JOB))
+        assertEquals(120_000L, deferred.minLatencyMillis)
+        assertTrue(deferred.isPersisted)
+        WidgetSettingsStore.save(context, 1, false, WidgetSettings())
+        WeatherRefreshScheduler.reconcile(context)
+        assertNull(scheduler.getPendingJob(WeatherRefreshScheduler.DEFERRED_JOB))
+        controller.destroy()
+    }
+
     @Test
     fun permissionFailuresFinishWithoutBackoffOrNetwork() {
         val settings = WidgetSettings().apply { weatherEnabled = true }

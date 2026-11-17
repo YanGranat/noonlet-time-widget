@@ -81,6 +81,8 @@ object WeatherRepository {
     internal fun shouldRetry(context: Context, request: WeatherRequest): Boolean =
         data(context).shouldRetry(request)
 
+    internal fun retryDelay(context: Context): Long = data(context).retryDelay()
+
     internal fun notifyChanged() {
         synchronized(listeners) {
             if (notificationPending) return
@@ -133,6 +135,7 @@ internal class WeatherStore(
     private val pending = mutableMapOf<String, Refresh>()
     private val pointRequests = mutableMapOf<String, CompletableFuture<WeatherSnapshot>>()
     private var loaded = false
+    private var retryNotBefore = 0L
     private var autoPlace: WeatherPlace? = null
     private var cacheEpoch = Any()
 
@@ -202,6 +205,7 @@ internal class WeatherStore(
                 return current.result.thenApply { value -> value }
             }
             val before = state(request)
+            if (retryNotBefore > now()) return CompletableFuture.completedFuture(before)
             if (
                 !forceRefresh &&
                     (!request.useDevice || foreground == null) &&
@@ -246,6 +250,7 @@ internal class WeatherStore(
             }
         }
         work.whenComplete { _, error ->
+            var deferred = false
             synchronized(lock) {
                 if (pending[request.key] !== operation) return@whenComplete
                 pending.remove(request.key)
@@ -259,10 +264,15 @@ internal class WeatherStore(
                             .filterIsInstance<WeatherFailure>()
                             .firstOrNull()
                     val retry = generateSequence(error) { it.cause }.any { it is IOException }
+                    generateSequence(error) { it.cause }.filterIsInstance<WeatherRetry>().firstOrNull()?.let {
+                        retryNotBefore = maxOf(retryNotBefore, it.notBefore)
+                        deferred = true
+                    }
                     errors[request.key] = Failure(cause?.status ?: WeatherStatus.UNAVAILABLE, retry)
                     while (errors.size > 32) errors.remove(errors.keys.first())
                 } else errors.remove(request.key)
             }
+            if (deferred) persist(operation.epoch)
             operation.result.complete(state(request))
             changed()
         }
@@ -295,6 +305,7 @@ internal class WeatherStore(
             erasureRevision++
             cache.clear()
             errors.clear()
+            retryNotBefore = 0L
             loaded = true
             if (forgetDevice) autoPlace = null
             abandoned = pending.values.toList()
@@ -336,14 +347,16 @@ internal class WeatherStore(
     }
 
     fun shouldRetry(request: WeatherRequest): Boolean =
-        synchronized(lock) { request.enabled && errors[request.key]?.retry == true }
+        synchronized(lock) { load(); request.enabled && (errors[request.key]?.retry == true || retryNotBefore > now()) }
+
+    fun retryDelay(): Long = synchronized(lock) { load(); (retryNotBefore - now()).coerceAtLeast(0) }
 
     private fun fetch(place: WeatherPlace, operation: Refresh): CompletableFuture<WeatherSnapshot> {
         val result: CompletableFuture<WeatherSnapshot>
         synchronized(lock) {
             cache[place.key]
                 ?.second
-                ?.takeIf { !operation.force && it.fresh(now()) }
+                ?.takeIf { !operation.force && operation.previousFailure == null && it.fresh(now()) }
                 ?.let {
                     operation.reusedCache = true
                     return CompletableFuture.completedFuture(it)
@@ -405,6 +418,7 @@ internal class WeatherStore(
                 atomic.delete()
                 return
             }
+            retryNotBefore = saved.optLong("retryNotBefore", 0).coerceAtLeast(0)
             for (index in 0 until minOf(entries.length(), 16)) runCatching {
                 val data = entries.getJSONObject(index)
                 val place = WeatherPlace.decode(data.getString("place")) ?: return@runCatching
@@ -420,7 +434,7 @@ internal class WeatherStore(
                     )
                 if (snapshot.usable(now())) cache[place.key] = place to snapshot
             }
-            if (entries.length() > 0 && cache.isEmpty()) atomic.delete()
+            if (entries.length() > 0 && cache.isEmpty() && retryNotBefore <= now()) atomic.delete()
         }
     }
 
@@ -437,6 +451,7 @@ internal class WeatherStore(
                     if (epoch !== cacheEpoch) return
                     JSONObject()
                         .put("provider", WeatherClient.SOURCE)
+                        .put("retryNotBefore", retryNotBefore)
                         .put(
                             "entries",
                             JSONArray().apply {

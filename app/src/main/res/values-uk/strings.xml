@@ -5,7 +5,7 @@
     <string name="world_widget_name">Світовий час</string>
     <string name="clock_widget_description">Компактний годинник із датою на прозорому тлі.</string>
     <string name="world_widget_description">Час у містах на світлих і темних картках.</string>
-    <string name="alarm_unavailable">Не вдалося відкрити системний будильник на цьому телефоні.</string>
+    <string name="alarm_unavailable">Не вдалося відкрити системний будильник.</string>
     <string name="edit_widget">Налаштування віджета</string>
     <string name="preview">Попередній перегляд</string>
     <string name="add_to_home_screen">Додати на головний екран</string>
@@ -22,9 +22,9 @@
     <string name="tap_date">Натискання на дату</string>
     <string name="tap_alarm">Натискання на будильник</string>
     <string name="appearance">Оформлення</string>
-    <string name="widget_orientation">Орієнтація віджета</string>
-    <string name="horizontal">Горизонтальна</string>
-    <string name="vertical">Вертикальна</string>
+    <string name="widget_orientation">Розташування елементів</string>
+    <string name="horizontal">Горизонтальне</string>
+    <string name="vertical">Вертикальне</string>
     <string name="time_date_spacing">Відстань між часом і датою</string>
     <string name="reset_to_defaults">Скинути оформлення</string>
     <string name="reset_to_defaults_message">Оформлення повернеться до початкового. Вибрані місця, увімкнені функції та дії після натискання збережуться.</string>
@@ -61,9 +61,9 @@
     <string name="alarm_size">Розмір будильника</string>
     <string name="alarm_alignment">Вирівнювання будильника</string>
     <string name="cities_and_countries">Міста та країни</string>
-    <string name="city_already_added">Це місто вже додано</string>
+    <string name="city_already_added">Це місце вже додано</string>
     <string name="add_place">Додати місце</string>
-    <string name="more_cities_hint">Для трьох або чотирьох міст збільште віджет на головному екрані до 2 × 2 клітинок або більше.</string>
+    <string name="more_cities_hint">Для трьох або чотирьох місць збільште віджет на головному екрані до 2 × 2 клітинок або більше.</string>
     <string name="font_weight">Товщина шрифту</string>
     <string name="day">День</string>
     <string name="night">Ніч</string>
@@ -92,7 +92,7 @@
     <string name="right">Праворуч</string>
     <string name="custom_format">Власний формат…</string>
     <string name="phone_date_language_hint">Назви днів тижня й місяців відповідають мові телефону.</string>
-    <string name="date_pattern_help">HH — години, mm — хвилини, EEE — день тижня, d — день, MMM — місяць, yyyy — рік. Слова беріть в одинарні лапки.</string>
+    <string name="date_pattern_help">HH — години, mm — хвилини, EEE — день тижня, d — день місяця, MMM — місяць, yyyy — рік. Слова беріть в одинарні лапки.</string>
     <string name="cancel">Скасувати</string>
     <string name="save">Зберегти</string>
     <string name="enter_a_format">Введіть формат</string>
@@ -126,7 +126,7 @@
     <string name="medium_font">Середній шрифт</string>
     <string name="bold_font">Жирний шрифт</string>
     <string name="discrete_font_weights_hint">Цей системний шрифт підтримує окремі ступені товщини.</string>
-    <string name="preview_size">Розмір перегляду %1$s</string>
+    <string name="preview_size">Розмір попереднього перегляду %1$s</string>
     <string name="world_clock_number">Світовий час %1$d</string>
     <string name="clock_number">Годинник %1$d</string>
     <string name="reset_setting">Відновити типове значення: %1$s</string>
@@ -149,7 +149,7 @@
     <string name="preview_move_right">На одну клітинку праворуч</string>
     <string name="preview_move_up">На одну клітинку вгору</string>
     <string name="preview_move_down">На одну клітинку вниз</string>
-    <string name="preview_fills_area">Перегляд: цей розмір займає всю область</string>
+    <string name="preview_fills_area">Віджет займає всю область попереднього перегляду</string>
     <string name="preview_position">Перетягніть для примірки. Стовпець %1$d, рядок %2$d</string>
     <string name="application_language">Мова застосунку</string>
     <string name="system_language">Мова системи</string>
@@ -208,8 +208,8 @@
     <string name="weather_device_location_detail">Місцезнаходження оновлюється під час відкриття %1$s. Коли застосунок закрито, дані про погоду оновлюються для останнього визначеного місця.</string>
     <string name="weather_update_failed">Не вдалося оновити дані про погоду</string>
     <string name="weather_text_format">Формат тексту погоди</string>
-    <string name="weather_condition_temperature">Стан і температура</string>
-    <string name="weather_temperature_condition">Температура і стан</string>
+    <string name="weather_condition_temperature">Погодні умови й температура</string>
+    <string name="weather_temperature_condition">Температура й погодні умови</string>
     <string name="weather_temperature_only">Лише температура</string>
     <string name="weather_text_color">Колір тексту погоди</string>
     <string name="weather_text_size">Розмір тексту погоди</string>

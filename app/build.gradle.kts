@@ -21,8 +21,8 @@ android {
         applicationId = "app.noonlet"
         minSdk = 26
         targetSdk = 36
-        versionCode = 58
-        versionName = "1.4.40"
+        versionCode = 59
+        versionName = "1.4.41"
     }
 
     signingConfigs {

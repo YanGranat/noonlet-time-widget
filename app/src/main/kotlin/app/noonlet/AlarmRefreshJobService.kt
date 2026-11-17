@@ -46,7 +46,7 @@ class AlarmRefreshJobService : JobService() {
         work = publisher.submit {
             var failed = false
             try {
-                BaseWidgetProvider.updateAll(applicationContext, false)
+                failed = !BaseWidgetProvider.updateAll(applicationContext, false)
             } catch (_: Exception) {
                 failed = true
             }

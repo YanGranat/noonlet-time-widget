@@ -10,7 +10,7 @@ import android.os.Bundle
 abstract class BaseWidgetProvider(private val world: Boolean) : AppWidgetProvider() {
     override fun onUpdate(context: Context, manager: AppWidgetManager, ids: IntArray) {
         AppLocales.refreshLanguage(context)
-        for (id in ids) updateWidget(context, id, world)
+        updateBatch(context, ids, world)
         if (!world) WeatherRefreshScheduler.reconcile(context)
         if (!world) AlarmRefreshScheduler.reconcile(context)
     }
@@ -22,7 +22,7 @@ abstract class BaseWidgetProvider(private val world: Boolean) : AppWidgetProvide
         options: Bundle,
     ) {
         AppLocales.refreshLanguage(context)
-        updateWidget(context, id, world)
+        updateBatch(context, intArrayOf(id), world)
     }
 
     override fun onDeleted(context: Context, ids: IntArray) {
@@ -71,12 +71,17 @@ abstract class BaseWidgetProvider(private val world: Boolean) : AppWidgetProvide
             WidgetInstances.remember(context, id, world)
         }
 
-        fun updateAll(context: Context, world: Boolean) {
-            for (id in boundIds(context, world)) updateWidget(
-                context,
-                id,
-                world,
-            )
+        internal fun updateBatch(context: Context, ids: IntArray, world: Boolean): Boolean {
+            var complete = true
+            for (id in ids) try {
+                updateWidget(context, id, world)
+            } catch (_: Exception) {
+                complete = false
+            }
+            return complete
         }
+
+        fun updateAll(context: Context, world: Boolean): Boolean =
+            updateBatch(context, boundIds(context, world), world)
     }
 }

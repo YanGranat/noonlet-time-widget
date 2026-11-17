@@ -14,7 +14,7 @@
     <string name="app_description">Widgets de reloj y hora mundial para la pantalla de inicio.</string>
     <string name="app_version_format">Versión %1$s</string>
     <string name="new_clock">Nuevo reloj</string>
-    <string name="new_world_clock">Nuevo widget de hora mundial</string>
+    <string name="new_world_clock">Nuevo reloj mundial</string>
     <string name="add_widget">Añadir widget</string>
     <string name="no_widgets">No hay widgets en la pantalla de inicio</string>
     <string name="clear_forecast_cache">Borrar caché del tiempo</string>
@@ -26,7 +26,7 @@
     <string name="clear_cache_confirmation">Se borrarán los datos del tiempo guardados en caché. Se conservarán tus ubicaciones guardadas y los ajustes de los widgets. Los datos del tiempo podrán descargarse de nuevo en la siguiente actualización.</string>
     <string name="forget_device_confirmation">Se borrarán la ubicación guardada del dispositivo y los datos del tiempo en caché. Se conservarán las ubicaciones seleccionadas manualmente y los ajustes de los widgets. La ubicación del dispositivo podrá obtenerse de nuevo en una actualización posterior mientras la aplicación esté abierta.</string>
     <string name="privacy_weather">El tiempo es opcional. Cuando está activado, las coordenadas seleccionadas se envían a Open-Meteo. La búsqueda de ubicaciones envía tu consulta a Open-Meteo. Las solicitudes también revelan tu dirección IP al servicio.</string>
-    <string name="privacy_storage">Los ajustes de la aplicación y de los widgets se guardan en este dispositivo. La copia de seguridad automática y la transferencia entre dispositivos están desactivadas. Usa Exportar ajustes para guardar una copia en un archivo. El tiempo y la última ubicación del dispositivo se guardan en caché localmente. La ubicación solo se solicita con la aplicación abierta. Noonlet no tiene cuentas, anuncios ni análisis de uso.</string>
+    <string name="privacy_storage">Los ajustes de la aplicación y de los widgets se guardan en este dispositivo. La copia de seguridad automática y la transferencia entre dispositivos están desactivadas. Usa Exportar ajustes para guardar una copia en un archivo. Los datos del tiempo y la última ubicación del dispositivo se guardan en caché localmente. La ubicación solo se solicita con la aplicación abierta. Noonlet no tiene cuentas, anuncios ni análisis de uso.</string>
     <string name="widget_clock_number">Reloj %1$d</string>
-    <string name="widget_world_number">Hora mundial %1$d</string>
+    <string name="widget_world_number">Reloj mundial %1$d</string>
 </resources>

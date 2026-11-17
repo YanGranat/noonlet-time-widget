@@ -4,7 +4,7 @@
     <string name="world_widget_name">Horloge mondiale</string>
     <string name="clock_widget_description">Une horloge compacte avec la date sur fond transparent.</string>
     <string name="world_widget_description">L’heure des villes, de jour comme de nuit, dans des cartes arrondies.</string>
-    <string name="alarm_unavailable">Le réveil système n’est pas disponible sur ce téléphone.</string>
+    <string name="alarm_unavailable">Impossible d’ouvrir le réveil système.</string>
     <string name="edit_widget">Modifier le widget</string>
     <string name="preview">Aperçu</string>
     <string name="add_to_home_screen">Ajouter à l’écran d’accueil</string>
@@ -60,9 +60,9 @@
     <string name="alarm_size">Taille de l’alarme</string>
     <string name="alarm_alignment">Alignement de l’alarme</string>
     <string name="cities_and_countries">Villes et pays</string>
-    <string name="city_already_added">Cette ville est déjà ajoutée</string>
+    <string name="city_already_added">Ce lieu a déjà été ajouté</string>
     <string name="add_place">Ajouter un lieu</string>
-    <string name="more_cities_hint">Pour trois ou quatre villes, agrandissez le widget de l’écran d’accueil à au moins 2 × 2 cases.</string>
+    <string name="more_cities_hint">Pour trois ou quatre lieux, agrandissez le widget de l’écran d’accueil à au moins 2 × 2 cases.</string>
     <string name="font_weight">Épaisseur de la police</string>
     <string name="day">Jour</string>
     <string name="night">Nuit</string>
@@ -91,7 +91,7 @@
     <string name="right">À droite</string>
     <string name="custom_format">Format personnalisé…</string>
     <string name="phone_date_language_hint">Les noms des jours et des mois utilisent la langue du téléphone.</string>
-    <string name="date_pattern_help">HH — heures, mm — minutes, EEE — jour de la semaine, d — jour, MMM — mois, yyyy — année. Placez le texte entre apostrophes.</string>
+    <string name="date_pattern_help">HH — heures, mm — minutes, EEE — jour de la semaine, d — jour du mois, MMM — mois, yyyy — année. Placez le texte entre apostrophes.</string>
     <string name="cancel">Annuler</string>
     <string name="save">Enregistrer</string>
     <string name="enter_a_format">Saisissez un format</string>
@@ -148,7 +148,7 @@
     <string name="preview_move_right">Une case à droite</string>
     <string name="preview_move_up">Une case vers le haut</string>
     <string name="preview_move_down">Une case vers le bas</string>
-    <string name="preview_fills_area">Aperçu : cette taille occupe toute la zone</string>
+    <string name="preview_fills_area">Le widget occupe toute la zone d’aperçu</string>
     <string name="preview_position">Faites glisser pour essayer une position. Colonne %1$d, ligne %2$d</string>
     <string name="application_language">Langue de l’application</string>
     <string name="system_language">Langue du système</string>
@@ -171,13 +171,13 @@
     <string name="weather_device_location">Position de l’appareil</string>
     <string name="weather_choose_location">Choisir un lieu</string>
     <string name="weather_permission_explanation">La position approximative de l’appareil est envoyée à Open-Meteo pour obtenir la météo locale. Vous pouvez aussi choisir un lieu.</string>
-    <string name="weather_allow_location">Autoriser la position</string>
+    <string name="weather_allow_location">Autoriser la localisation</string>
     <string name="weather_open_settings">Ouvrir les paramètres</string>
     <string name="close">Fermer</string>
     <string name="weather_loading">Chargement de la météo…</string>
     <string name="weather_unavailable">Météo indisponible</string>
-    <string name="weather_permission_required">Autorisation de position requise</string>
-    <string name="weather_location_disabled">La position de l’appareil est désactivée</string>
+    <string name="weather_permission_required">Autorisation de localisation requise</string>
+    <string name="weather_location_disabled">La localisation de l’appareil est désactivée</string>
     <string name="weather_stale_short">Périmée</string>
     <string name="weather_search_location">Rechercher une ville ou une localité</string>
     <string name="weather_search_prompt">Saisissez au moins deux caractères</string>

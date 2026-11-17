@@ -4,7 +4,7 @@
     <string name="world_widget_name">Ora mondiale</string>
     <string name="clock_widget_description">Orologio compatto con data e sfondo trasparente.</string>
     <string name="world_widget_description">Orologi delle città con schede diurne e notturne arrotondate.</string>
-    <string name="alarm_unavailable">La sveglia di sistema non è disponibile su questo telefono.</string>
+    <string name="alarm_unavailable">Impossibile aprire la sveglia di sistema.</string>
     <string name="edit_widget">Modifica widget</string>
     <string name="preview">Anteprima</string>
     <string name="add_to_home_screen">Aggiungi alla schermata Home</string>
@@ -21,7 +21,7 @@
     <string name="tap_date">Tocco della data</string>
     <string name="tap_alarm">Tocco della sveglia</string>
     <string name="appearance">Aspetto</string>
-    <string name="widget_orientation">Orientamento del widget</string>
+    <string name="widget_orientation">Disposizione degli elementi</string>
     <string name="horizontal">Orizzontale</string>
     <string name="vertical">Verticale</string>
     <string name="time_date_spacing">Spazio tra ora e data</string>
@@ -60,9 +60,9 @@
     <string name="alarm_size">Dimensione della sveglia</string>
     <string name="alarm_alignment">Allineamento della sveglia</string>
     <string name="cities_and_countries">Città e paesi</string>
-    <string name="city_already_added">Questa città è già stata aggiunta</string>
+    <string name="city_already_added">Questo luogo è già stato aggiunto</string>
     <string name="add_place">Aggiungi luogo</string>
-    <string name="more_cities_hint">Per tre o quattro città, ingrandisci il widget nella schermata Home ad almeno 2 × 2 celle.</string>
+    <string name="more_cities_hint">Per tre o quattro luoghi, ingrandisci il widget nella schermata Home ad almeno 2 × 2 celle.</string>
     <string name="font_weight">Spessore del carattere</string>
     <string name="day">Giorno</string>
     <string name="night">Notte</string>
@@ -91,7 +91,7 @@
     <string name="right">Destra</string>
     <string name="custom_format">Formato personalizzato…</string>
     <string name="phone_date_language_hint">I nomi dei giorni della settimana e dei mesi seguono la lingua del telefono.</string>
-    <string name="date_pattern_help">HH — ore, mm — minuti, EEE — giorno della settimana, d — giorno, MMM — mese, yyyy — anno. Racchiudi le parole tra apici singoli.</string>
+    <string name="date_pattern_help">HH — ore, mm — minuti, EEE — giorno della settimana, d — giorno del mese, MMM — mese, yyyy — anno. Racchiudi le parole tra apici singoli.</string>
     <string name="cancel">Annulla</string>
     <string name="save">Salva</string>
     <string name="enter_a_format">Inserisci un formato</string>
@@ -148,7 +148,7 @@
     <string name="preview_move_right">Una cella a destra</string>
     <string name="preview_move_up">Una cella in alto</string>
     <string name="preview_move_down">Una cella in basso</string>
-    <string name="preview_fills_area">Anteprima: questa dimensione riempie l\'area</string>
+    <string name="preview_fills_area">Il widget occupa tutta l’area di anteprima</string>
     <string name="preview_position">Trascina per provare una posizione. Colonna %1$d, riga %2$d</string>
     <string name="application_language">Lingua dell\'app</string>
     <string name="system_language">Lingua di sistema</string>
@@ -189,7 +189,7 @@
     <string name="weather_fog">Nebbia</string>
     <string name="weather_drizzle">Pioviggine</string>
     <string name="weather_rain">Pioggia</string>
-    <string name="weather_freezing_rain">Pioggia gelata</string>
+    <string name="weather_freezing_rain">Pioggia congelantesi</string>
     <string name="weather_snow">Neve</string>
     <string name="weather_snow_grains">Neve granulare</string>
     <string name="weather_rain_showers">Rovesci</string>
@@ -197,7 +197,7 @@
     <string name="weather_thunderstorm">Temporale</string>
     <string name="weather_thunderstorm_hail">Temporale con grandine</string>
     <string name="weather_settings_unavailable">Le impostazioni Android non sono disponibili</string>
-    <string name="weather_freezing_drizzle">Pioviggine gelata</string>
+    <string name="weather_freezing_drizzle">Pioviggine congelantesi</string>
     <string name="weather_loading_short">Attendi</string>
     <string name="weather_no_data">Nessun dato</string>
     <string name="weather_automatic">Automatica</string>

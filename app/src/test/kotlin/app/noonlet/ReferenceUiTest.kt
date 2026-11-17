@@ -60,7 +60,7 @@ class ReferenceUiTest {
                     "Widget tap",
                     "Advanced tap actions",
                     "Font",
-                    "Widget orientation",
+                    AppLocales.text(context, R.string.widget_orientation),
                     "Reset appearance",
                     "Top padding",
                     "Bottom padding",
@@ -289,10 +289,10 @@ class ReferenceUiTest {
                     picker.getListView().setSelection(picker.getListView().getCount() - 1)
                     layoutDialog(picker)
                     assertNotNull(
-                        "Date language limitation must be explained",
+                        "Date formatting language must be shown",
                         text(
                             requireNotNull(picker.window).getDecorView(),
-                            "Названия дней недели и месяцев используют язык телефона.",
+                            AppLocales.text(activity, R.string.phone_date_language_hint),
                         ),
                     )
                     choose(picker, 3)

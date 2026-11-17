@@ -37,6 +37,32 @@ class DialogDesignTest {
     }
 
     @Test
+    @Config(qualifiers = "de-w360dp-h720dp-mdpi")
+    fun shortChoicesRemainFullyVisibleWhenTheirLabelsWrap() {
+        val originalScale = context.resources.configuration.fontScale
+        try {
+            RuntimeEnvironment.setFontScale(1.3f)
+            AppLocales.setLanguage(context, "de")
+            Robolectric.buildActivity(AppSettingsActivity::class.java).setup().visible().use { controller ->
+                val activity = controller.get()
+                val labels = intArrayOf(R.string.weather_condition_temperature, R.string.weather_temperature_condition,
+                    R.string.weather_temperature_only).map { AppLocales.text(activity, it) }.toTypedArray()
+                val dialog = AppDialogBuilder(activity)
+                    .setTitle(R.string.weather_text_format)
+                    .setSingleChoiceItems(labels, 0) { selected, _ -> selected.dismiss() }.show()
+                val root = dialog.window!!.decorView
+                layout(root, 320, 780)
+                val list = dialog.listView
+                assertEquals(labels.lastIndex, list.lastVisiblePosition)
+                val last = list.getChildAt(list.childCount - 1)
+                assertTrue("Last row ${last.bottom} exceeds list height ${list.height}",
+                    last.bottom <= list.height)
+                dialog.dismiss()
+            }
+        } finally { RuntimeEnvironment.setFontScale(originalScale) }
+    }
+
+    @Test
     fun privacyConfirmationsKeepWrappedTitlesInsideTheirHeader() {
         for (language in listOf("en", "de", "es", "fr", "it", "pl", "pt", "ru", "uk")) {
             AppLocales.setLanguage(context, language)
@@ -70,7 +96,7 @@ class DialogDesignTest {
         val entries =
             listOf(
                 DialogCase("Font", "Шрифт"),
-                DialogCase("Widget orientation", "Расположение элементов"),
+                DialogCase("Element layout", "Расположение элементов"),
                 DialogCase("Time alignment", "Выравнивание времени"),
                 DialogCase("Time format", "Формат времени"),
                 DialogCase("Date format", "Формат даты"),

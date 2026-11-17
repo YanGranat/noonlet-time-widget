@@ -5,7 +5,7 @@
     <string name="world_widget_name">Zegar światowy</string>
     <string name="clock_widget_description">Kompaktowy zegar z datą na przezroczystym tle.</string>
     <string name="world_widget_description">Czas w miastach na jasnych i ciemnych kartach.</string>
-    <string name="alarm_unavailable">Budzik systemowy jest niedostępny na tym telefonie.</string>
+    <string name="alarm_unavailable">Nie udało się otworzyć budzika systemowego.</string>
     <string name="edit_widget">Edytuj widżet</string>
     <string name="preview">Podgląd</string>
     <string name="add_to_home_screen">Dodaj do ekranu głównego</string>
@@ -61,9 +61,9 @@
     <string name="alarm_size">Rozmiar alarmu</string>
     <string name="alarm_alignment">Wyrównanie alarmu</string>
     <string name="cities_and_countries">Miasta i kraje</string>
-    <string name="city_already_added">To miasto jest już dodane</string>
+    <string name="city_already_added">To miejsce zostało już dodane</string>
     <string name="add_place">Dodaj miejsce</string>
-    <string name="more_cities_hint">Dla trzech lub czterech miast powiększ widżet na ekranie głównym do co najmniej 2 × 2 pól.</string>
+    <string name="more_cities_hint">Dla trzech lub czterech miejsc powiększ widżet na ekranie głównym do co najmniej 2 × 2 pól.</string>
     <string name="font_weight">Grubość czcionki</string>
     <string name="day">Dzień</string>
     <string name="night">Noc</string>
@@ -92,7 +92,7 @@
     <string name="right">Do prawej</string>
     <string name="custom_format">Własny format…</string>
     <string name="phone_date_language_hint">Nazwy dni tygodnia i miesięcy są wyświetlane w języku telefonu.</string>
-    <string name="date_pattern_help">HH — godziny, mm — minuty, EEE — dzień tygodnia, d — dzień, MMM — miesiąc, yyyy — rok. Ujmij zwykły tekst w apostrofy.</string>
+    <string name="date_pattern_help">HH — godziny, mm — minuty, EEE — dzień tygodnia, d — dzień miesiąca, MMM — miesiąc, yyyy — rok. Ujmij zwykły tekst w apostrofy.</string>
     <string name="cancel">Anuluj</string>
     <string name="save">Zapisz</string>
     <string name="enter_a_format">Wpisz format</string>
@@ -149,7 +149,7 @@
     <string name="preview_move_right">Jedno pole w prawo</string>
     <string name="preview_move_up">Jedno pole w górę</string>
     <string name="preview_move_down">Jedno pole w dół</string>
-    <string name="preview_fills_area">Podgląd: ten rozmiar wypełnia cały podgląd</string>
+    <string name="preview_fills_area">Widżet wypełnia cały obszar podglądu</string>
     <string name="preview_position">Przeciągnij, aby sprawdzić pozycję. Kolumna %1$d, wiersz %2$d</string>
     <string name="application_language">Język aplikacji</string>
     <string name="system_language">Język systemu</string>
@@ -185,7 +185,7 @@
     <string name="weather_search_failed">Wyszukiwanie miejsc jest niedostępne. Spróbuj ponownie.</string>
     <string name="weather_clear">Bezchmurnie</string>
     <string name="weather_mainly_clear">Małe zachmurzenie</string>
-    <string name="weather_partly_cloudy">Zachmurzenie</string>
+    <string name="weather_partly_cloudy">Częściowe zachmurzenie</string>
     <string name="weather_overcast">Pochmurno</string>
     <string name="weather_fog">Mgła</string>
     <string name="weather_drizzle">Mżawka</string>

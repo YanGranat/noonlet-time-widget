@@ -33,9 +33,9 @@ class UpdateReceiver : BroadcastReceiver() {
             AppLocales.refreshLanguage(context)
             val signature = AppLocales.widgetLanguageSignature(context)
             if (languageOnly && AppLocales.widgetLanguageDelivered(context, signature)) return
-            BaseWidgetProvider.updateAll(context, false)
-            BaseWidgetProvider.updateAll(context, true)
-            AppLocales.markWidgetLanguageDelivered(context, signature)
+            val clocks = BaseWidgetProvider.updateAll(context, false)
+            val world = BaseWidgetProvider.updateAll(context, true)
+            if (clocks && world) AppLocales.markWidgetLanguageDelivered(context, signature)
         }
     }
 }

@@ -1,7 +1,6 @@
 package app.noonlet
 
 import java.io.IOException
-import java.net.URL
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import java.util.Locale
@@ -11,7 +10,7 @@ import org.json.JSONObject
 
 internal data class WeatherResponse(val body: String, val serverTime: Long? = null)
 
-internal class WeatherClient(private val read: (String) -> WeatherResponse = ::readHttps) {
+internal class WeatherClient(private val read: (String) -> WeatherResponse = WeatherHttp.shared::read) {
     fun current(place: WeatherPlace, now: () -> Long): WeatherSnapshot {
         val latitude = place.latitudeE6 / 1_000_000.0
         val longitude = place.longitudeE6 / 1_000_000.0
@@ -117,45 +116,6 @@ internal class WeatherClient(private val read: (String) -> WeatherResponse = ::r
                 throw IOException("Invalid weather response", error)
             }
             return JSONObject(response)
-        }
-
-        private fun readHttps(address: String): WeatherResponse {
-            val started = System.nanoTime()
-            val connection = URL(address).openConnection() as HttpsURLConnection
-            connection.connectTimeout = 5_000
-            connection.readTimeout = 7_000
-            connection.instanceFollowRedirects = false
-            connection.setRequestProperty("Accept", "application/json")
-            connection.setRequestProperty("User-Agent", "Noonlet/Android")
-            try {
-                requireSuccess(connection.responseCode)
-                return connection.inputStream.use { input ->
-                    val output = java.io.ByteArrayOutputStream()
-                    val buffer = ByteArray(4096)
-                    while (true) {
-                        if (
-                            System.nanoTime() - started > 15_000_000_000L ||
-                                Thread.currentThread().isInterrupted
-                        )
-                            throw IOException("Weather request timed out")
-                        val remaining = 15_000 - (System.nanoTime() - started) / 1_000_000
-                        connection.readTimeout = minOf(7_000L, remaining.coerceAtLeast(1L)).toInt()
-                        val count = input.read(buffer)
-                        if (count < 0) break
-                        if (output.size() + count > 256 * 1024)
-                            throw IOException("Weather response is too large")
-                        output.write(buffer, 0, count)
-                    }
-                    val date = connection.date.takeIf { it > 0 }
-                    val age = connection.getHeaderField("Age")?.toLongOrNull()?.takeIf { it >= 0 } ?: 0L
-                    val serverTime = date?.let {
-                        runCatching { Math.addExact(it, Math.multiplyExact(age, 1000L)) }.getOrNull()
-                    }
-                    WeatherResponse(output.toString(StandardCharsets.UTF_8.name()), serverTime)
-                }
-            } finally {
-                connection.disconnect()
-            }
         }
     }
 }
