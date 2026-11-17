@@ -2,7 +2,7 @@
 
 Home-screen clock widgets for Android 8.0 and later.
 
-[Download APK](https://github.com/YanGranat/noonlet-time-widget/releases/download/v1.4.39/Noonlet-1.4.39.apk)
+[Download APK](https://github.com/YanGranat/noonlet-time-widget/releases/download/v1.4.41/Noonlet-1.4.41.apk)
 
 - **Clock:** time, date, the next system alarm and optional weather, with configurable typography, colors, spacing and tap actions.
 - **World clock:** up to four cities or single-timezone countries, with day/night colors and an adjustable rounded backdrop.
