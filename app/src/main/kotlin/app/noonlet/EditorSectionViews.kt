@@ -134,6 +134,9 @@ internal class EditorSectionViews(
             val parent = previous.parent as? ViewGroup ?: continue
             val index = parent.indexOfChild(previous)
             val layout = previous.layoutParams
+            val inputFocus = previous.findFocus()?.let { focusTarget(previous, it) }
+            val accessibilityFocus = descendants(previous).firstOrNull { it.isAccessibilityFocused }
+                ?.let { focusTarget(previous, it) }
             val staging = ui.vertical()
             build(staging, key, defaults)
             val replacement = sectionViews[key]?.group
@@ -141,7 +144,39 @@ internal class EditorSectionViews(
             staging.removeView(replacement)
             parent.removeView(previous)
             parent.addView(replacement, index, layout)
+            inputFocus?.let { resolveFocus(replacement, it)?.requestFocus() }
+            accessibilityFocus?.let { target ->
+                replacement.post {
+                    resolveFocus(replacement, target)?.performAccessibilityAction(
+                        android.view.accessibility.AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null)
+                }
+            }
         }
+    }
+
+    private data class FocusTarget(val tag: Any?, val path: List<Int>, val type: Class<*>)
+
+    private fun descendants(root: View): Sequence<View> = sequence {
+        yield(root)
+        if (root is ViewGroup) for (index in 0 until root.childCount) yieldAll(descendants(root.getChildAt(index)))
+    }
+
+    private fun focusTarget(root: View, view: View): FocusTarget {
+        val path = mutableListOf<Int>()
+        var current = view
+        while (current !== root) {
+            val parent = current.parent as ViewGroup
+            path.add(0, parent.indexOfChild(current))
+            current = parent
+        }
+        return FocusTarget(view.tag, path, view.javaClass)
+    }
+
+    private fun resolveFocus(root: View, target: FocusTarget): View? {
+        if (target.tag != null) return root.findViewWithTag(target.tag)
+        var current = root
+        for (index in target.path) current = (current as? ViewGroup)?.getChildAt(index) ?: return null
+        return current.takeIf { it.javaClass == target.type }
     }
 
     fun keyFor(view: View): EditorSection? {

@@ -16,6 +16,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.view.ViewGroup
+import android.view.Gravity
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.Toast
@@ -60,6 +63,9 @@ internal class MainActivity : Activity(), EditorDialogOwner, EditorHost {
     private val ACCENT get() = palette.accent
     private lateinit var root: LinearLayout
     private var contentScroll: ScrollView? = null
+    private var previewContainer: LinearLayout? = null
+    private var settingsContainer: LinearLayout? = null
+    private var previewPinned: Boolean? = null
     private var restoredScroll = -1
     private var knownPlacedSignature: String? = null
     private var editorAppLocaleTag: String? = null
@@ -268,7 +274,12 @@ internal class MainActivity : Activity(), EditorDialogOwner, EditorHost {
         editorConfiguration = Configuration(configuration)
         super.onConfigurationChanged(configuration)
         AppLocales.refreshLanguage(this)
-        if (!preview.active || !::root.isInitialized) return
+        if (!::root.isInitialized) return
+        root.layoutParams = (root.layoutParams as FrameLayout.LayoutParams).apply {
+            width = if (resources.configuration.screenWidthDp > 600) ui.dp(600f) else -1
+        }
+        arrangeEditorContent()
+        if (!preview.active) return
         val phoneLocale = AppLocales.phoneLocale(this)
         val appLocaleTag = AppLocales.appLocale(this, phoneLocale).toLanguageTag()
         val phoneChanged = !phoneLocale.toLanguageTag().equals(preview.phoneLocaleTag)
@@ -413,7 +424,11 @@ internal class MainActivity : Activity(), EditorDialogOwner, EditorHost {
                 insets
             },
         )
-        setContentView(root)
+        val viewport = FrameLayout(this).apply { setBackgroundColor(BG) }
+        viewport.addView(root, FrameLayout.LayoutParams(
+            if (resources.configuration.screenWidthDp > 600) ui.dp(600f) else -1,
+            -1, Gravity.TOP or Gravity.CENTER_HORIZONTAL))
+        setContentView(viewport)
         root.requestApplyInsets()
 
         val header = ui.horizontal()
@@ -476,21 +491,13 @@ internal class MainActivity : Activity(), EditorDialogOwner, EditorHost {
         }
         content.addView(preview.createCard(), LinearLayout.LayoutParams(-1, -2))
 
-        val pinPreview =
-            (resources.configuration.screenHeightDp >= 720 &&
-                resources.configuration.screenWidthDp < resources.configuration.screenHeightDp &&
-                resources.configuration.fontScale <= 1.15f)
-        if (pinPreview) root.addView(content, LinearLayout.LayoutParams(-1, -2))
         val controls = ui.vertical()
         controls.setPadding(ui.dp(16f), 0, ui.dp(16f), ui.dp(16f))
-        if (pinPreview) scroll.addView(controls)
-        else {
-            val scrollBody = ui.vertical()
-            scrollBody.addView(content, LinearLayout.LayoutParams(-1, -2))
-            scrollBody.addView(controls, LinearLayout.LayoutParams(-1, -2))
-            scroll.addView(scrollBody)
-        }
         root.addView(scroll, LinearLayout.LayoutParams(-1, 0, 1f))
+        previewContainer = content
+        settingsContainer = controls
+        previewPinned = null
+        arrangeEditorContent()
         val missingTarget = session.missingTarget()
         renderedMissingTarget = missingTarget
         if (missingTarget) missingTargetNotice(controls)
@@ -533,6 +540,32 @@ internal class MainActivity : Activity(), EditorDialogOwner, EditorHost {
             renderContent()
             weather.refreshIfActive()
         }
+    }
+
+    private fun arrangeEditorContent() {
+        val content = previewContainer ?: return
+        val controls = settingsContainer ?: return
+        val scroll = contentScroll ?: return
+        val configuration = resources.configuration
+        val pinned = configuration.screenHeightDp >= 720 &&
+            configuration.screenWidthDp < configuration.screenHeightDp && configuration.fontScale <= 1.15f
+        preview.stage?.requestLayout()
+        if (previewPinned == pinned) return
+        val previousScroll = scroll.scrollY
+        (content.parent as? ViewGroup)?.removeView(content)
+        (controls.parent as? ViewGroup)?.removeView(controls)
+        scroll.removeAllViews()
+        if (pinned) {
+            root.addView(content, root.indexOfChild(scroll), LinearLayout.LayoutParams(-1, -2))
+            scroll.addView(controls)
+        } else {
+            scroll.addView(ui.vertical().apply {
+                addView(content, LinearLayout.LayoutParams(-1, -2))
+                addView(controls, LinearLayout.LayoutParams(-1, -2))
+            })
+        }
+        previewPinned = pinned
+        scroll.post { scroll.scrollTo(0, previousScroll) }
     }
 
     private fun selectHomeTarget(id: Int, kind: Boolean) {

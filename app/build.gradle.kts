@@ -21,8 +21,8 @@ android {
         applicationId = "app.noonlet"
         minSdk = 26
         targetSdk = 36
-        versionCode = 57
-        versionName = "1.4.39"
+        versionCode = 58
+        versionName = "1.4.40"
     }
 
     signingConfigs {
@@ -32,6 +32,7 @@ android {
                 storePassword = releaseKeys.getProperty("storePassword")
                 keyAlias = releaseKeys.getProperty("keyAlias")
                 keyPassword = releaseKeys.getProperty("keyPassword")
+                enableV3Signing = true
             }
         }
     }

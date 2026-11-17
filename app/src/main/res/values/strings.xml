@@ -61,7 +61,6 @@
     <string name="alarm_alignment">Alarm alignment</string>
     <string name="cities_and_countries">Cities and countries</string>
     <string name="city_already_added">This city is already added</string>
-    <string name="change_city">Change city</string>
     <string name="add_place">Add place</string>
     <string name="more_cities_hint">For three or four cities, enlarge the home-screen widget to 2 × 2 cells or more.</string>
     <string name="font_weight">Font weight</string>
@@ -129,7 +128,6 @@
     <string name="preview_size">Preview size %1$s</string>
     <string name="world_clock_number">World clock %1$d</string>
     <string name="clock_number">Clock %1$d</string>
-    <string name="city_actions_for">City actions: %1$s</string>
     <string name="reset_setting">Reset to default: %1$s</string>
     <string name="time_summary">Size %1$d · weight %2$d · %3$s</string>
     <string name="date_summary">%1$s · size %2$d</string>

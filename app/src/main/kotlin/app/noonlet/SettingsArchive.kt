@@ -14,7 +14,7 @@ import org.json.JSONTokener
 
 internal object SettingsArchive {
     const val MAX_BYTES = 256 * 1024
-    data class Configuration(val size: WidgetSize, val settings: WidgetSettings)
+    data class Configuration(val size: WidgetSize, val settings: WidgetSettings, val binding: String? = null)
     data class Group(val draft: Configuration, val widgets: List<Configuration>)
     data class Contents(val language: String, val theme: ThemeMode, val unit: TemperatureUnit,
         val worldTab: Boolean, val clock: Group, val world: Group)
@@ -25,7 +25,8 @@ internal object SettingsArchive {
         fun group(world: Boolean): Group {
             val preset = editor.previewSize(world, WidgetSize.entries.size).coerceAtLeast(0)
             val ids = WidgetInstances.manageableIds(context, BaseWidgetProvider.boundIds(context, world), world)
-            val placed = ids.map { Configuration(widgetSize(context, it, world), WidgetSettingsStore.load(context, it, world)) }
+            val placed = ids.map { Configuration(widgetSize(context, it, world), WidgetSettingsStore.load(context, it, world),
+                WidgetSettingsStore.identity(context, it, world)) }
             return Group(Configuration(WidgetSize.entries[preset], WidgetSettingsStore.loadUnplaced(context, world)),
                 placed + imported.filter { it.world == world }.map { it.configuration })
         }
@@ -89,17 +90,23 @@ internal object SettingsArchive {
             val value = root.getJSONObject(key)
             val items = value.getJSONArray("widgets")
             require(items.length() <= 64)
-            return Group(decodeConfiguration(value.getJSONObject("draft"), world),
-                (0 until items.length()).map { decodeConfiguration(items.getJSONObject(it), world) })
+            val widgets = (0 until items.length()).map { decodeConfiguration(items.getJSONObject(it), world) }
+            val bindings = widgets.mapNotNull { it.binding }
+            require(bindings.distinct().size == bindings.size)
+            return Group(decodeConfiguration(value.getJSONObject("draft"), world), widgets)
         }
         return Contents(language, theme, unit, worldTab, group("clock", false), group("world", true))
     }
 
     internal fun configurationJson(value: Configuration): JSONObject =
         JSONObject().put("size", value.size.name).put("settings", SettingsCodec.encode(value.settings))
+            .apply { value.binding?.let { put("binding", it) } }
 
     internal fun decodeConfiguration(value: JSONObject, world: Boolean): Configuration {
         val size = WidgetSize.valueOf(value.getString("size"))
+        val binding = if (value.has("binding")) value.getString("binding").also {
+            require(it.matches(Regex("[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}")))
+        } else null
         val settings = WidgetSettings.defaults(world)
         val data = value.getJSONObject("settings")
         val schema = SettingsCodec.encode(settings)
@@ -130,7 +137,7 @@ internal object SettingsArchive {
         require(ClockPattern.validate(settings.timeFormat) && ClockPattern.validate(settings.dateFormat))
         require(settings.alarmFormat.trim { it <= ' ' }.isNotEmpty() && settings.alarmFormat.length <= 96)
         SimpleDateFormat(settings.alarmFormat, Locale.ROOT)
-        return Configuration(size, settings)
+        return Configuration(size, settings, binding)
     }
 
     fun restore(context: Context, contents: Contents) {
@@ -147,8 +154,10 @@ internal object SettingsArchive {
                 WidgetSettingsStore.saveUnplaced(context, world, group.draft.settings)
                 editor.selectPreviewSize(world, group.draft.size.ordinal)
                 val ids = WidgetInstances.manageableIds(context, BaseWidgetProvider.boundIds(context, world), world)
-                group.widgets.forEachIndexed { index, configuration ->
-                    if (index < ids.size) WidgetSettingsStore.save(context, ids[index], world, configuration.settings)
+                val bindings = ids.associateBy { WidgetSettingsStore.identity(context, it, world) }
+                group.widgets.forEach { configuration ->
+                    val id = configuration.binding?.let(bindings::get)
+                    if (id != null) WidgetSettingsStore.save(context, id, world, configuration.settings)
                     else pending += world to configuration
                 }
             }
@@ -180,22 +189,6 @@ internal object SettingsArchive {
     }
 
     private fun checkEnvelope(text: String) {
-        require(text.length <= MAX_BYTES)
-        var depth = 0
-        var quoted = false
-        var escaped = false
-        for (char in text) {
-            if (quoted) {
-                if (escaped) escaped = false
-                else if (char == '\\') escaped = true
-                else if (char == '"') quoted = false
-            } else when (char) {
-                '"' -> quoted = true
-                '{', '[' -> require(++depth <= 12)
-                '}', ']' -> require(--depth >= 0)
-                '\'', '/' -> throw IllegalArgumentException("Invalid JSON")
-            }
-        }
-        require(depth == 0 && !quoted)
+        JsonEnvelope.validate(text, MAX_BYTES, 12)
     }
 }

@@ -61,7 +61,6 @@
     <string name="alarm_alignment">Alinhamento do despertador</string>
     <string name="cities_and_countries">Cidades e países</string>
     <string name="city_already_added">Esta cidade já foi adicionada</string>
-    <string name="change_city">Alterar cidade</string>
     <string name="add_place">Adicionar local</string>
     <string name="more_cities_hint">Para três ou quatro cidades, aumente o widget no ecrã inicial para pelo menos 2 × 2 células.</string>
     <string name="font_weight">Espessura da fonte</string>
@@ -129,7 +128,6 @@
     <string name="preview_size">Tamanho da prévia %1$s</string>
     <string name="world_clock_number">Hora mundial %1$d</string>
     <string name="clock_number">Relógio %1$d</string>
-    <string name="city_actions_for">Ações da cidade: %1$s</string>
     <string name="reset_setting">Restaurar padrão: %1$s</string>
     <string name="time_summary">Tamanho %1$d · espessura %2$d · %3$s</string>
     <string name="date_summary">%1$s · tamanho %2$d</string>

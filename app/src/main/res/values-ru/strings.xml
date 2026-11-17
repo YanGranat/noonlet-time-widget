@@ -61,7 +61,6 @@
     <string name="alarm_alignment">Выравнивание будильника</string>
     <string name="cities_and_countries">Города и страны</string>
     <string name="city_already_added">Этот город уже добавлен</string>
-    <string name="change_city">Изменить город</string>
     <string name="add_place">Добавить место</string>
     <string name="more_cities_hint">Для трёх или четырёх городов увеличьте виджет на рабочем столе до 2 × 2 клеток или больше.</string>
     <string name="font_weight">Толщина шрифта</string>
@@ -129,7 +128,6 @@
     <string name="preview_size">Размер предпросмотра %1$s</string>
     <string name="world_clock_number">Мировое время %1$d</string>
     <string name="clock_number">Часы %1$d</string>
-    <string name="city_actions_for">Действия с городом: %1$s</string>
     <string name="reset_setting">Вернуть исходное значение: %1$s</string>
     <string name="time_summary">Размер %1$d · толщина %2$d · %3$s</string>
     <string name="date_summary">%1$s · размер %2$d</string>

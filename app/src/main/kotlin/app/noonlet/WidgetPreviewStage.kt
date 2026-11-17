@@ -74,7 +74,10 @@ internal class WidgetPreviewStage(context: Context) : FrameLayout(context) {
             paddingTop +
                 paddingBottom +
                 (contentWidth * (ROWS * PITCH_Y - ROW_GAP) / (COLUMNS * PITCH_X)).roundToInt()
-        val height = resolveSize(maxOf(suggestedMinimumHeight, naturalHeight), heightSpec)
+        val windowHeight = resources.configuration.screenHeightDp
+        val preferredHeight = if (windowHeight < 720)
+            minOf(naturalHeight, dp(maxOf(112, windowHeight - EDITOR_RESERVED_HEIGHT).toFloat())) else naturalHeight
+        val height = resolveSize(maxOf(suggestedMinimumHeight, preferredHeight), heightSpec)
         canvas?.let { board ->
             val zoom = maxOf(1f, scale(width, height))
             val contentWidth = nativeSize?.let { dp(it.width) } ?: (logicalWidth * zoom).roundToInt()
@@ -384,6 +387,8 @@ internal class WidgetPreviewStage(context: Context) : FrameLayout(context) {
         private const val PITCH_X = 83.5f
         private const val PITCH_Y = 92f
         private const val ROW_GAP = 10f
+        // Keep navigation, size controls and a settings row visible in a short window.
+        private const val EDITOR_RESERVED_HEIGHT = 336
 
         private fun action(action: AccessibilityNodeInfo.AccessibilityAction, label: String) =
             AccessibilityNodeInfo.AccessibilityAction(action.id, label)

@@ -62,7 +62,6 @@
     <string name="alarm_alignment">Weckerausrichtung</string>
     <string name="cities_and_countries">Städte und Länder</string>
     <string name="city_already_added">Diese Stadt wurde bereits hinzugefügt</string>
-    <string name="change_city">Stadt ändern</string>
     <string name="add_place">Ort hinzufügen</string>
     <string name="more_cities_hint">Vergrößere das Widget auf dem Startbildschirm für drei oder vier Städte auf mindestens 2 × 2 Felder.</string>
     <string name="font_weight">Schriftstärke</string>
@@ -130,7 +129,6 @@
     <string name="preview_size">Vorschaugröße %1$s</string>
     <string name="world_clock_number">Weltuhr %1$d</string>
     <string name="clock_number">Uhr %1$d</string>
-    <string name="city_actions_for">Stadtaktionen: %1$s</string>
     <string name="reset_setting">Standardwert wiederherstellen: %1$s</string>
     <string name="time_summary">Größe %1$d · Stärke %2$d · %3$s</string>
     <string name="date_summary">%1$s · Größe %2$d</string>

@@ -67,6 +67,37 @@ class AppSettingsTransferTest {
         }
     }
 
+    @Test fun rejectedInputDoesNotBlockExportOrAnotherImport() {
+        val invalid = Uri.parse("content://settings.example/invalid.json")
+        val nested = "[".repeat(700) + "0" + "]".repeat(700)
+        Shadows.shadowOf(context.contentResolver).registerInputStream(invalid,
+            ("#\"\n{\"data\":" + nested + "}#\"").byteInputStream())
+        Robolectric.buildActivity(AppSettingsActivity::class.java).setup().visible().use { controller ->
+            val activity = controller.get()
+            fun choose(tag: String, uri: Uri?) {
+                activity.findViewById<View>(android.R.id.content).findViewWithTag<View>(tag).performClick()
+                val request = Shadows.shadowOf(activity).nextStartedActivityForResult
+                assertNotNull(request)
+                Shadows.shadowOf(activity).receiveResult(request.intent,
+                    if (uri == null) Activity.RESULT_CANCELED else Activity.RESULT_OK,
+                    uri?.let { Intent().setData(it) })
+            }
+            choose("import-settings", invalid)
+            waitUntil { ShadowToast.getTextOfLatestToast() == AppLocales.text(context, R.string.settings_file_error) }
+            assertEquals(56, WidgetSettingsStore.loadUnplaced(context, false).textSize)
+            choose("export-settings", null)
+            val valid = Uri.parse("content://settings.example/valid.json")
+            val contents = SettingsArchive.capture(context)
+            contents.clock.draft.settings.textSize = 61
+            Shadows.shadowOf(context.contentResolver).registerInputStream(valid, SettingsArchive.encode(contents).byteInputStream())
+            choose("import-settings", valid)
+            waitUntil { ShadowAlertDialog.getLatestAlertDialog()?.isShowing == true }
+            ShadowAlertDialog.getLatestAlertDialog().getButton(AlertDialog.BUTTON_POSITIVE).performClick()
+            waitUntil { ShadowToast.getTextOfLatestToast() == "Settings imported" }
+            assertEquals(61, WidgetSettingsStore.loadUnplaced(context, false).textSize)
+        }
+    }
+
     @Test fun pendingImportSurvivesRecreationAndCancellationKeepsBothDrafts() {
         val contents = SettingsArchive.capture(context)
         contents.clock.draft.settings.textSize = 61

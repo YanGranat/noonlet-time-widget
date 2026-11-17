@@ -111,21 +111,10 @@ internal class WeatherClient(private val read: (String) -> WeatherResponse = ::r
         }
 
         private fun responseObject(response: String): JSONObject {
-            if (response.length > 256 * 1024) throw IOException("Weather response is too large")
-            var depth = 0
-            var quoted = false
-            var escaped = false
-            for (char in response) {
-                if (quoted) {
-                    if (escaped) escaped = false
-                    else if (char == '\\') escaped = true
-                    else if (char == '"') quoted = false
-                } else when (char) {
-                    '"' -> quoted = true
-                    '{', '[' -> if (++depth > 32) throw IOException("Weather response is too deeply nested")
-                    '}', ']' -> if (--depth < 0) throw IOException("Weather response is invalid")
-                    '\'', '/' -> throw IOException("Weather response is not standard JSON")
-                }
+            try {
+                JsonEnvelope.validate(response, 256 * 1024, 32)
+            } catch (error: IllegalArgumentException) {
+                throw IOException("Invalid weather response", error)
             }
             return JSONObject(response)
         }

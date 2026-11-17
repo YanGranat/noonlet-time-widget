@@ -28,6 +28,7 @@ internal object WidgetInstances {
         if (synchronized(remembered) { remembered[app]?.contains(id) == true }) return
         val manager = AppWidgetManager.getInstance(context)
         if (!BaseWidgetProvider.owns(context, manager.getAppWidgetInfo(id)?.provider, world)) return
+        WidgetSettingsStore.identity(context, id, world)
         if (!manager.getAppWidgetOptions(id).getBoolean(CONFIGURED, false))
             manager.updateAppWidgetOptions(id, Bundle().apply { putBoolean(CONFIGURED, true) })
         synchronized(remembered) { remembered.getOrPut(app) { mutableSetOf() }.add(id) }

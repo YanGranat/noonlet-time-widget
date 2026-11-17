@@ -18,15 +18,20 @@ internal object WidgetRestoreState {
     fun capture(context: Context) = synchronized(lock) {
         val stored = context.getSharedPreferences("noonlet_widgets", Context.MODE_PRIVATE)
         val originals = JSONObject()
+        val identities = JSONObject()
         for (world in listOf(false, true)) {
             val prefix = if (world) "world." else "clock."
             val ids = stored.all.keys.asSequence().filter { it.startsWith(prefix) && it.endsWith(".saved") }
                 .mapNotNull { it.removePrefix(prefix).removeSuffix(".saved").toIntOrNull() }
                 .filter { it >= 0 }.toSet() + 0
-            for (id in ids) originals.put(key(id, world),
-                SettingsCodec.encode(WidgetSettingsStore.loadForRestore(context, id, world)))
+            for (id in ids) {
+                originals.put(key(id, world), SettingsCodec.encode(WidgetSettingsStore.loadForRestore(context, id, world)))
+                if (id > 0) WidgetSettingsStore.existingIdentity(context, id, world)?.let {
+                    identities.put(key(id, world), it)
+                }
+            }
         }
-        write(context, JSONObject().put("originals", originals).put("targets", JSONArray()))
+        write(context, JSONObject().put("originals", originals).put("identities", identities).put("targets", JSONArray()))
     }
 
     fun remap(context: Context, oldIds: IntArray, newIds: IntArray, world: Boolean) = synchronized(lock) {
@@ -52,11 +57,15 @@ internal object WidgetRestoreState {
                     ?: originals.getJSONObject(key(0, world)))
             }
         }
+        val identities = pairs.map { (old, _) ->
+            state.optJSONObject("identities")?.optString(key(old, world))?.takeIf { it.isNotEmpty() }
+        }
         pairs.forEach { (_, new) -> targets += key(new, world) }
         state.put("targets", JSONArray(targets.sorted()))
         write(context, state)
         pairs.forEachIndexed { index, (_, new) ->
             WidgetSettingsStore.save(context, new, world, snapshots[index])
+            WidgetSettingsStore.restoreIdentity(context, new, world, identities[index])
         }
         // A previous provider may already have assigned an old ID to another restored widget.
         for (old in oldIds) if (old > 0 && key(old, world) !in targets)

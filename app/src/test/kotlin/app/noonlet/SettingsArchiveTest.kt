@@ -108,14 +108,14 @@ class SettingsArchiveTest {
         }
     }
 
-    @Test fun restoringMapsLocalBindingsAndPreservesConfigurationsWithoutAHost() {
+    @Test fun configurationsWithoutIdentityDoNotReplaceUnrelatedBindings() {
         bind(6540, false)
         bind(6541, false)
         bind(6542, true)
         SettingsArchive.restore(context, contents())
-        assertEquals(61, WidgetSettingsStore.load(context, 6540, false).textSize)
-        assertEquals(54, WidgetSettingsStore.load(context, 6541, false).textSize)
-        assertEquals(60, WidgetSettingsStore.load(context, 6542, true).textSize)
+        assertEquals(56, WidgetSettingsStore.load(context, 6540, false).textSize)
+        assertEquals(56, WidgetSettingsStore.load(context, 6541, false).textSize)
+        assertEquals(56, WidgetSettingsStore.load(context, 6542, true).textSize)
         assertEquals(58, WidgetSettingsStore.loadUnplaced(context, false).textSize)
         assertEquals(52, WidgetSettingsStore.loadUnplaced(context, true).textSize)
         assertEquals("de-DE", AppLocales.selectedLanguageTag(context))
@@ -123,15 +123,57 @@ class SettingsArchiveTest {
         assertEquals(TemperatureUnit.FAHRENHEIT, AppPreferences(context).temperatureUnit())
         assertTrue(EditorPreferences(context).worldTab())
         val pending = ImportedWidgetConfigurations.all(context)
-        assertEquals(1, pending.size)
-        assertTrue(pending.single().world)
-        assertEquals(55, pending.single().configuration.settings.textSize)
-        assertArrayEquals(arrayOf("Asia/Tokyo"), pending.single().configuration.settings.cities)
+        assertEquals(4, pending.size)
+        assertEquals(55, pending.last().configuration.settings.textSize)
+        assertArrayEquals(arrayOf("Asia/Tokyo"), pending.last().configuration.settings.cities)
         val exported = SettingsArchive.encode(SettingsArchive.capture(context))
         assertFalse(exported.contains("6540"))
-        assertFalse(exported.contains(pending.single().token))
-        assertEquals(2, SettingsArchive.decode(exported).clock.widgets.size)
-        assertEquals(2, SettingsArchive.decode(exported).world.widgets.size)
+        assertFalse(exported.contains(pending.first().token))
+        assertEquals(4, SettingsArchive.decode(exported).clock.widgets.size)
+        assertEquals(3, SettingsArchive.decode(exported).world.widgets.size)
+    }
+
+    @Test fun importMatchesStableIdentityInsteadOfWidgetOrderOrReusedNumericIds() {
+        bind(6820, false)
+        bind(6821, false)
+        WidgetSettingsStore.save(context, 6820, false, WidgetSettings().apply { textSize = 61 })
+        WidgetSettingsStore.save(context, 6821, false, WidgetSettings().apply { textSize = 49 })
+        val original = SettingsArchive.read(SettingsArchive.encode(SettingsArchive.capture(context)).byteInputStream())
+        WidgetSettingsStore.delete(context, 6820, false)
+        WidgetSettingsStore.save(context, 6820, false, WidgetSettings().apply { textSize = 35 })
+        WidgetSettingsStore.save(context, 6821, false, WidgetSettings().apply { textSize = 42 })
+        SettingsArchive.restore(context, original)
+        assertEquals(35, WidgetSettingsStore.load(context, 6820, false).textSize)
+        assertEquals(49, WidgetSettingsStore.load(context, 6821, false).textSize)
+        assertEquals(61, ImportedWidgetConfigurations.all(context).single().configuration.settings.textSize)
+        SettingsArchive.restore(context, original)
+        assertEquals(1, ImportedWidgetConfigurations.all(context).size)
+        assertEquals(35, WidgetSettingsStore.load(context, 6820, false).textSize)
+    }
+
+    @Test fun commentsCannotHideExcessiveJsonNesting() {
+        val hidden = "#" + "\"" + "\n" + "[".repeat(900) + "0" + "]".repeat(900) + "#\""
+        assertThrows(IllegalArgumentException::class.java) { SettingsArchive.decode(hidden) }
+        val original = SettingsArchive.encode(contents())
+        assertThrows(IllegalArgumentException::class.java) { SettingsArchive.decode("# comment\n" + original) }
+        val unquoted = "{bad\":" + "[".repeat(900) + "0" + "]".repeat(900) + ",end\":0}"
+        assertThrows(IllegalArgumentException::class.java) { SettingsArchive.decode(unquoted) }
+        assertThrows(Exception::class.java) { WeatherClient.parsePlaces(hidden) }
+        assertThrows(Exception::class.java) { WeatherClient.parsePlaces("# comment\n{}") }
+    }
+
+    @Test fun pruningUnboundSettingsPreservesLiveIdentitiesAndTheDraft() {
+        bind(6920, false)
+        bind(6921, false)
+        val kept = WidgetSettingsStore.identity(context, 6920, false)
+        val removed = WidgetSettingsStore.identity(context, 6921, false)
+        WidgetSettingsStore.saveUnplaced(context, false, WidgetSettings().apply { textSize = 47 })
+        WidgetSettingsStore.pruneConfigurations(context, intArrayOf(6920), intArrayOf())
+        assertTrue(WidgetSettingsStore.hasOwnSettings(context, 6920, false))
+        assertFalse(WidgetSettingsStore.hasOwnSettings(context, 6921, false))
+        assertEquals(kept, WidgetSettingsStore.identity(context, 6920, false))
+        assertNotEquals(removed, WidgetSettingsStore.identity(context, 6921, false))
+        assertEquals(47, WidgetSettingsStore.loadUnplaced(context, false).textSize)
     }
 
     @Test fun customAlarmFormatsRoundTripWithTheSameVocabularyAsTheAlarmRenderer() {

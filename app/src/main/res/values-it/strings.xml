@@ -61,7 +61,6 @@
     <string name="alarm_alignment">Allineamento della sveglia</string>
     <string name="cities_and_countries">Città e paesi</string>
     <string name="city_already_added">Questa città è già stata aggiunta</string>
-    <string name="change_city">Cambia città</string>
     <string name="add_place">Aggiungi luogo</string>
     <string name="more_cities_hint">Per tre o quattro città, ingrandisci il widget nella schermata Home ad almeno 2 × 2 celle.</string>
     <string name="font_weight">Spessore del carattere</string>
@@ -129,7 +128,6 @@
     <string name="preview_size">Dimensione anteprima %1$s</string>
     <string name="world_clock_number">Ora mondiale %1$d</string>
     <string name="clock_number">Orologio %1$d</string>
-    <string name="city_actions_for">Azioni della città: %1$s</string>
     <string name="reset_setting">Ripristina valore predefinito: %1$s</string>
     <string name="time_summary">Dimensione %1$d · spessore %2$d · %3$s</string>
     <string name="date_summary">%1$s · dimensione %2$d</string>

@@ -86,7 +86,8 @@ class SettingsTransferStateTest {
         Robolectric.buildActivity(MainActivity::class.java, EditorIntents.edit(context, 7610, false))
             .setup().visible().use { editor ->
                 val activity = editor.get()
-                val saved = contents().let { it.copy(clock = it.clock.copy(widgets = listOf(it.clock.draft))) }
+                val saved = contents().let { it.copy(clock = it.clock.copy(widgets = listOf(
+                    it.clock.draft.copy(binding = SettingsArchive.capture(context).clock.widgets.single().binding)))) }
                 root(activity).findViewWithTag<View>("settings-trigger").performClick()
                 editor.pause()
                 import(saved)

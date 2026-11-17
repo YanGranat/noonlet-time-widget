@@ -19,6 +19,23 @@ object WidgetSettingsStore {
     private fun configurationKey(id: Int, world: Boolean) =
         "${if (world) "world." else "clock."}$id"
 
+    @Synchronized internal fun identity(context: Context, id: Int, world: Boolean): String {
+        require(id > 0)
+        val stored = configurations(context)
+        val key = configurationKey(id, world) + ".identity"
+        return stored.getString(key, null) ?: java.util.UUID.randomUUID().toString().also {
+            check(stored.edit().putString(key, it).commit())
+        }
+    }
+
+    internal fun existingIdentity(context: Context, id: Int, world: Boolean): String? =
+        configurations(context).getString(configurationKey(id, world) + ".identity", null)
+
+    @Synchronized internal fun restoreIdentity(context: Context, id: Int, world: Boolean, identity: String?) {
+        require(id > 0)
+        check(configurations(context).edit().putString(configurationKey(id, world) + ".identity", identity).commit())
+    }
+
     private fun draftPrefix(world: Boolean) = if (world) "world." else "clock."
 
     private fun sourcePrefix(stored: SharedPreferences, id: Int, world: Boolean): String {
@@ -57,6 +74,7 @@ object WidgetSettingsStore {
     }
 
     fun delete(context: Context, id: Int, world: Boolean) {
+        configurations(context).edit().remove(configurationKey(id, world) + ".identity").apply()
         val stored = preferences(context)
         stored
             .edit()
@@ -140,14 +158,27 @@ object WidgetSettingsStore {
         bound.filter { hasOwnSettings(context, it, world) }.toIntArray()
 
     fun pruneConfigurations(context: Context, clockIds: IntArray, worldIds: IntArray) {
+        val settings = preferences(context)
+        val savedPattern = Regex("(clock|world)\\.([1-9][0-9]*)\\.saved")
+        for (key in settings.all.keys) {
+            val match = savedPattern.matchEntire(key) ?: continue
+            val world = match.groupValues[1] == "world"
+            val id = match.groupValues[2].toIntOrNull() ?: continue
+            if (configurations(context).contains(configurationKey(id, world) + ".identity") &&
+                id !in (if (world) worldIds else clockIds) && !RestoredWidgetBindings.contains(context, id, world))
+                delete(context, id, world)
+        }
         val stored = configurations(context)
         val changes = stored.edit()
         var changed = false
         for (name in stored.all.keys) {
             val world = name.startsWith("world.")
             if (!world && !name.startsWith("clock.")) continue
-            val id = name.substringAfter('.').toIntOrNull() ?: continue
-            if (id !in (if (world) worldIds else clockIds) || hasOwnSettings(context, id, world)) {
+            val identity = name.endsWith(".identity")
+            val id = name.substringAfter('.').substringBefore('.').toIntOrNull() ?: continue
+            val missing = id !in (if (world) worldIds else clockIds) &&
+                !RestoredWidgetBindings.contains(context, id, world)
+            if (missing || !identity && hasOwnSettings(context, id, world)) {
                 changes.remove(name)
                 changed = true
             }

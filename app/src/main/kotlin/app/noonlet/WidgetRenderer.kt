@@ -462,7 +462,7 @@ object WidgetRenderer {
             val measure =
                 Paint(Paint.ANTI_ALIAS_FLAG).apply {
                     typeface = batch.typeface(settings.fontWeight)
-                    textSize = timeSize * context.resources.displayMetrics.scaledDensity
+                    textSize = spPixels(context, timeSize)
                 }
             dateWidth =
                 maxOf(
@@ -476,9 +476,8 @@ object WidgetRenderer {
                 )
         }
         card.setViewVisibility(R.id.city_name, if (timeOnly) View.GONE else View.VISIBLE)
-        val pixelsPerUnit = context.resources.displayMetrics.scaledDensity
-        card.setTextViewTextSize(R.id.city_time, TypedValue.COMPLEX_UNIT_PX, timeSize * pixelsPerUnit)
-        card.setTextViewTextSize(R.id.city_name, TypedValue.COMPLEX_UNIT_PX, nameSize * pixelsPerUnit)
+        card.setTextViewTextSize(R.id.city_time, TypedValue.COMPLEX_UNIT_PX, spPixels(context, timeSize))
+        card.setTextViewTextSize(R.id.city_name, TypedValue.COMPLEX_UNIT_PX, spPixels(context, nameSize))
         setClock(
             context,
             card,
@@ -514,7 +513,7 @@ object WidgetRenderer {
         card.setTextViewTextSize(
             R.id.city_date,
             TypedValue.COMPLEX_UNIT_PX,
-            maxOf(6 / scale, dateSize) * pixelsPerUnit,
+            spPixels(context, maxOf(6 / scale, dateSize)),
         )
         setClock(
             context,
@@ -552,13 +551,12 @@ object WidgetRenderer {
         val samples = ClockPattern.fittingSamples(pattern, batch.phoneLocale(), zone)
         var lower = 6 / context.resources.configuration.fontScale
         var upper = maxOf(lower, size)
-        val scaledDensity = context.resources.displayMetrics.scaledDensity
         val limit = maxOf(1f, width * context.resources.displayMetrics.density - 1)
         val paint = measurePaint(context, settings.fontWeight, upper, batch)
         if (captionFits(paint, samples, limit)) return upper
         repeat(10) {
             val middle = (lower + upper) / 2
-            paint.textSize = middle * scaledDensity
+            paint.textSize = spPixels(context, middle)
             if (captionFits(paint, samples, limit)) lower = middle else upper = middle
         }
         return lower

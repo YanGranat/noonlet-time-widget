@@ -25,9 +25,9 @@ Install the APK, open your home screen's **Widgets** menu, and choose **Noonlet*
 
 The editor offers 2 × 1, 4 × 1, 2 × 2 and 4 × 2 layouts. The selected layout sets the initial size requested when adding from the app. The home screen controls final placement and resizing.
 
-Export or import app and widget settings from **Settings**. Imported widgets that are not placed yet appear in **My widgets**.
+Export or import app and widget settings from **Settings**. Import updates matching widgets; other configurations appear in **My widgets** for placement.
 
-Weekday and month names in widgets follow the phone's language. Weather, day/night colors and time-difference labels refresh periodically and may be delayed by battery-saving modes. Device location is checked when you open Noonlet or refresh weather; while closed, weather uses the last detected place. A manual location works without location permission.
+Weekday and month names in widgets follow the phone's language. Weather, day/night colors and time-difference labels refresh periodically and may be delayed by battery-saving modes. Device location is checked when you open Noonlet or refresh weather; while closed, weather uses the last detected place with location permission. A manual location works without location permission.
 
 ## Build
 

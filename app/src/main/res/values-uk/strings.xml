@@ -62,7 +62,6 @@
     <string name="alarm_alignment">Вирівнювання будильника</string>
     <string name="cities_and_countries">Міста та країни</string>
     <string name="city_already_added">Це місто вже додано</string>
-    <string name="change_city">Змінити місто</string>
     <string name="add_place">Додати місце</string>
     <string name="more_cities_hint">Для трьох або чотирьох міст збільште віджет на головному екрані до 2 × 2 клітинок або більше.</string>
     <string name="font_weight">Товщина шрифту</string>
@@ -130,7 +129,6 @@
     <string name="preview_size">Розмір перегляду %1$s</string>
     <string name="world_clock_number">Світовий час %1$d</string>
     <string name="clock_number">Годинник %1$d</string>
-    <string name="city_actions_for">Дії з містом: %1$s</string>
     <string name="reset_setting">Відновити типове значення: %1$s</string>
     <string name="time_summary">Розмір %1$d · товщина %2$d · %3$s</string>
     <string name="date_summary">%1$s · розмір %2$d</string>

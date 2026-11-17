@@ -2,6 +2,7 @@ package app.noonlet
 
 import android.content.Context
 import android.graphics.Paint
+import android.os.Build
 import android.util.TypedValue
 import android.view.Gravity
 import android.widget.RemoteViews
@@ -29,6 +30,14 @@ internal fun px(context: Context, dp: Float) =
     (dp * context.resources.displayMetrics.density).roundToInt()
 
 internal fun px(context: Context, dp: Int) = px(context, dp.toFloat())
+
+internal fun spPixels(context: Context, size: Float): Float =
+    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, size, context.resources.displayMetrics)
+
+private fun pixelsToSp(context: Context, pixels: Float): Float =
+    if (Build.VERSION.SDK_INT >= 34)
+        TypedValue.deriveDimension(TypedValue.COMPLEX_UNIT_SP, pixels, context.resources.displayMetrics)
+    else pixels / context.resources.displayMetrics.scaledDensity
 
 internal fun gravity(alignment: WidgetAlignment) =
     (when (alignment) {
@@ -58,12 +67,13 @@ internal fun fitAlarm(
             .measureText(text) / context.resources.displayMetrics.density
     var availableWidth = width
     if (settings.showAlarmIcon) {
-        measured += settings.alarmSize * context.resources.configuration.fontScale
+        measured += spPixels(context, settings.alarmSize.toFloat()) / context.resources.displayMetrics.density
         availableWidth -= 4
     }
     return maxOf(
         .25f,
-        settings.alarmSize * minOf(1f, maxOf(1f, availableWidth) / maxOf(1f, measured) * .98f),
+        pixelsToSp(context, spPixels(context, settings.alarmSize.toFloat()) *
+            minOf(1f, maxOf(1f, availableWidth) / maxOf(1f, measured) * .98f)),
     )
 }
 
@@ -82,7 +92,8 @@ internal fun fitPattern(
         ClockPattern.fittingSamples(pattern, locale, zone)
             .maxOfOrNull(paint::measureText)
             ?.div(context.resources.displayMetrics.density) ?: 0f
-    return maxOf(.25f, size * minOf(1f, maxOf(1f, width) / maxOf(1f, maximum) * .98f))
+    return maxOf(.25f, pixelsToSp(context, paint.textSize *
+        minOf(1f, maxOf(1f, width) / maxOf(1f, maximum) * .98f)))
 }
 
 internal fun fontHeight(context: Context, weight: Int, size: Float, batch: WidgetRenderBatch): Float {

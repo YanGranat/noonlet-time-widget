@@ -61,7 +61,6 @@
     <string name="alarm_alignment">Alignement de l’alarme</string>
     <string name="cities_and_countries">Villes et pays</string>
     <string name="city_already_added">Cette ville est déjà ajoutée</string>
-    <string name="change_city">Changer de ville</string>
     <string name="add_place">Ajouter un lieu</string>
     <string name="more_cities_hint">Pour trois ou quatre villes, agrandissez le widget de l’écran d’accueil à au moins 2 × 2 cases.</string>
     <string name="font_weight">Épaisseur de la police</string>
@@ -129,7 +128,6 @@
     <string name="preview_size">Taille de l’aperçu %1$s</string>
     <string name="world_clock_number">Horloge mondiale %1$d</string>
     <string name="clock_number">Horloge %1$d</string>
-    <string name="city_actions_for">Actions pour la ville : %1$s</string>
     <string name="reset_setting">Rétablir la valeur par défaut : %1$s</string>
     <string name="time_summary">Taille %1$d · épaisseur %2$d · %3$s</string>
     <string name="date_summary">%1$s · taille %2$d</string>

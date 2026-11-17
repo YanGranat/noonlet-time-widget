@@ -1,6 +1,6 @@
 # Privacy policy
 
-Last updated: November 14, 2026
+Last updated: November 17, 2026
 
 Noonlet stores app preferences and widget settings in Android app storage. It has no user accounts,
 advertising, analytics or crash-reporting SDKs, and no application backend.
@@ -15,7 +15,9 @@ from Open-Meteo over HTTPS using the coordinates of the selected place.
   widget settings. Device location permission is not required.
 - **Device location:** with your permission, Noonlet can obtain an approximate
   location while the app is open. While the app is closed, weather refreshes use
-  the last detected place; they do not obtain a new device location.
+  the last detected place; they do not obtain a new device location. Revoking
+  location permission stops these refreshes until access is granted again or
+  a manual location is selected.
 - **Place search:** searching for a weather location sends the search text to
   Open-Meteo's geocoding service before you select a result. This service uses
   GeoNames location data.

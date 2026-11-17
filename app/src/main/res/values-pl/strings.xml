@@ -62,7 +62,6 @@
     <string name="alarm_alignment">Wyrównanie alarmu</string>
     <string name="cities_and_countries">Miasta i kraje</string>
     <string name="city_already_added">To miasto jest już dodane</string>
-    <string name="change_city">Zmień miasto</string>
     <string name="add_place">Dodaj miejsce</string>
     <string name="more_cities_hint">Dla trzech lub czterech miast powiększ widżet na ekranie głównym do co najmniej 2 × 2 pól.</string>
     <string name="font_weight">Grubość czcionki</string>
@@ -130,7 +129,6 @@
     <string name="preview_size">Rozmiar podglądu %1$s</string>
     <string name="world_clock_number">Zegar światowy %1$d</string>
     <string name="clock_number">Zegar %1$d</string>
-    <string name="city_actions_for">Działania dla miasta: %1$s</string>
     <string name="reset_setting">Przywróć wartość domyślną: %1$s</string>
     <string name="time_summary">Rozmiar %1$d · grubość %2$d · %3$s</string>
     <string name="date_summary">%1$s · rozmiar %2$d</string>
