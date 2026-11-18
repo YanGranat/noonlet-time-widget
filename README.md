@@ -31,7 +31,7 @@ Weekday and month names in widgets follow the phone's language. Weather, day/nig
 
 ## Build
 
-Requirements: JDK 21, Android SDK 36, and `ANDROID_HOME` or a local `local.properties` containing the SDK path.
+Requirements: JDK 21, Android SDK Platform 36, Build Tools 35.0.0, and `ANDROID_HOME` or a local `local.properties` containing the SDK path.
 
 ```sh
 ./gradlew :app:assembleRelease
@@ -50,6 +50,26 @@ keyPassword=your-key-password
 ```
 
 `storeFile` is relative to `.signing/`. Without `signing.properties`, the release APK is unsigned. Keep signing keys private and retain the same key for future updates.
+
+### Verify a rebuild
+
+Use fresh checkouts of the release tag with separate `GRADLE_USER_HOME` directories and no signing settings. Use the tool versions specified above and the checked-in Gradle wrapper. Line endings are defined in `.gitattributes`.
+
+To rebuild `v1.4.41`, keep `kotlin-and-annotations.txt` and `material-symbols.txt` in `app/src/main/assets/licenses/` as CRLF; use LF for the other files in that directory.
+
+```sh
+./gradlew :app:assembleRelease --no-build-cache --rerun-tasks
+```
+
+With `apksigcopier` and Android's `apksigner` on `PATH`, compare the downloaded release with the unsigned rebuild from the same commit:
+
+```sh
+apksigcopier compare --unsigned Noonlet-VERSION.apk app/build/outputs/apk/release/app-release-unsigned.apk
+```
+
+On Windows, add `--verify-cmd "apksigner.bat verify"`.
+
+This verifies the rebuild using the release's public signature. The private signing key is not required.
 
 ## Development
 
